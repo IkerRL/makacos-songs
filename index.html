@@ -1,1 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maka Songs - Omen Edition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="omen-bg"></div>
+    <div class="bg-energy-core"></div>
+    <div class="noise-overlay"></div>
 
+    <header class="main-header">
+        <h1 class="titulo-principal">MAKACOS SONGS</h1>
+    </header>
+
+    <main class="grid-equipos" id="grid-canciones"></main>
+
+    <!-- MODAL DE ZOOM -->
+    <div class="team-modal" id="modal-zoom" onclick="cerrarModal()">
+        <div class="team-modal-card" onclick="event.stopPropagation()">
+            <div class="modal-img-container">
+                <img src="" id="zoom-img">
+            </div>
+            <div class="modal-info-side">
+                <div class="modal-user-row">
+                    <span>👤</span>
+                    <span id="zoom-user">Usuario</span>
+                </div>
+                <h2 class="modal-song-title" id="zoom-titulo">Nombre de la Canción</h2>
+                <div class="modal-player">
+                    <span class="play-btn">▶</span>
+                    <div class="player-bar-bg"><div class="player-bar-fill"></div></div>
+                    <span class="player-time">3:44 / 3:44</span>
+                </div>
+                <div class="modal-icons-row">
+                    <!-- Ticket eliminado -->
+                    <div class="jurado-placeholder">
+                        <div class="dot-jurado"></div>
+                        <div class="dot-jurado"></div>
+                        <div class="dot-jurado"></div>
+                    </div>
+                    <div class="icon-twitch">💬</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
