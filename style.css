@@ -1,284 +1,147 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Unbounded:wght@400;700;900&display=swap');
-
 @font-face {
     font-family: 'BertholdBlock';
     src: url('Berthold-Block.ttf');
 }
 
-:root {
-    --deep:      #06060f;
-    --surface:    #0c0c1e;
-    --panel:      #10102a;
-    --lift:       #16163a;
-    --accent:     #8b7fff;
-    --accent-dim: rgba(139, 127, 255, 0.15);
-    --accent-glow: rgba(139, 127, 255, 0.4);
-    --accent-line: rgba(139, 127, 255, 0.25);
-    --gold:       #e8c84a;
-    --gold-dim:   rgba(232, 200, 74, 0.12);
-    --text-1:     #f0eeff;
-    --text-2:     #9492b8;
-    --text-3:     #4e4c74;
-    --radius-sm: 8px;
-    --radius-md: 14px;
-    --radius-lg: 20px;
-    --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    --spring:     0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-*, *::before, *::after {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    background: var(--deep);
-    color: var(--text-1);
+    background-color: #06060f;
+    color: #ffffff;
     font-family: 'DM Mono', monospace;
-    overflow-x: hidden;
-    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
 }
 
-/* ─── FONDO ─── */
-.omen-bg {
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    background: var(--deep);
-}
-.omen-bg::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(100,85,255,0.22), transparent),
-        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(80,60,200,0.14), transparent),
-        radial-gradient(ellipse 40% 30% at 10% 60%,  rgba(120,100,255,0.08), transparent);
-}
-.bg-energy-core {
-    position: fixed;
-    top: 40%; left: 50%;
-    width: 900px; height: 900px;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(100,85,255,0.12) 0%, transparent 65%);
-    animation: core-pulse 8s ease-in-out infinite;
-    pointer-events: none;
-    z-index: -1;
-}
-@keyframes core-pulse {
-    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
-    50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.08); }
-}
-.noise-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-    pointer-events: none;
-}
-
-/* ─── HEADER ─── */
-.main-header {
-    position: relative;
-    padding: 52px 30px 40px;
-    text-align: center;
-    border-bottom: 1px solid var(--accent-line);
-}
-.titulo-principal {
-    font-family: 'BertholdBlock', 'Unbounded', sans-serif;
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 900;
-    letter-spacing: 0.06em;
-    color: var(--text-1);
-    text-shadow: 0 0 40px var(--accent-glow);
-}
-.titulo-principal::after {
-    content: attr(data-subtitle);
-    display: block;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    margin-top: 10px;
-    color: var(--text-3);
-    letter-spacing: 0.35em;
-}
-
-/* ─── GRID ─── */
+/* --- GRID --- */
 .grid-equipos {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 14px;
-    padding: 36px 30px;
-    max-width: 1600px;
-    margin: 0 auto;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
 
 .card-equipo {
-    height: 88px;
-    background: var(--surface);
-    border-radius: var(--radius-md);
-    border: 1px solid rgba(139,127,255,0.1);
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all var(--transition);
-}
-.card-equipo:hover {
-    border-color: rgba(139,127,255,0.35);
-    transform: translateY(-2px);
-}
-
-.smoke-cover {
-    position: absolute;
-    inset: 0;
-    z-index: 10;
-    background: var(--panel);
+    background: #0c0c1e;
+    border: 1px solid #1e1e3f;
+    border-radius: 15px;
+    height: 110px; /* Altura fija para que todas sean iguales */
+    position: relative; /* Importante para que el 01 flote dentro */
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0 25px;
+    cursor: pointer;
 }
-.smoke-cover::after {
-    content: "REVELAR";
-    color: var(--text-3);
-    font-size: 0.55rem;
-    letter-spacing: 0.4em;
-}
-.card-equipo.revealed .smoke-cover {
-    transform: translateY(-100%);
+
+/* El número 01: Ahora es absoluto para no empujar lo demás */
+.card-number {
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffffff;
+    line-height: 1; /* Evita espacios extra */
 }
 
 .equipo-content {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 0 16px;
-    height: 100%;
+    width: 100%;
+    /* No hace falta margin-top porque el 01 ya no ocupa espacio */
 }
+
 .equipo-logo {
-    width: 52px; height: 52px;
-    border-radius: var(--radius-sm);
+    width: 65px;
+    height: 65px;
+    border-radius: 12px;
     object-fit: cover;
-    border: 1px solid rgba(139,127,255,0.15);
+    border: 1px solid #333355;
 }
-.equipo-info { flex: 1; min-width: 0; }
+
+.equipo-info {
+    flex: 1;
+    margin-left: 20px;
+}
+
 .nombre-equipo {
     display: block;
     font-family: 'BertholdBlock', sans-serif;
-    font-size: 0.9rem;
-    color: var(--text-1);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    font-size: 1.2rem;
+    text-transform: uppercase;
 }
+
 .artista-equipo {
     display: block;
-    font-size: 0.65rem;
-    color: var(--accent);
-    margin-top: 2px;
+    color: #8b7fff;
+    font-size: 0.8rem;
+    text-transform: uppercase;
 }
 
-/* Nota en el Grid */
 .vol-text {
-    font-family: 'DM Mono', monospace;
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--gold);
-    text-shadow: 0 0 20px rgba(232,200,74,0.4);
-    min-width: 60px;
-    text-align: right;
-}
-.score-placeholder-img {
-    width: 30px;
-    height: 30px;
-    object-fit: contain;
-    opacity: 0.4;
+    font-family: 'BertholdBlock', sans-serif;
+    font-size: 2.2rem;
+    color: #e8c84a;
 }
 
-/* ─── MODAL ─── */
+.score-placeholder-img {
+    width: 40px;
+    height: 40px;
+}
+
+/* --- MODAL (Simplificado para que encaje con tu foto) --- */
 .team-modal {
     position: fixed;
     inset: 0;
-    background: rgba(4, 4, 12, 0.92);
-    display: flex;
+    background: rgba(0,0,0,0.85);
+    display: none;
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    opacity: 0; visibility: hidden;
-    backdrop-filter: blur(10px);
-    transition: 0.4s;
 }
-.team-modal.active { opacity: 1; visibility: visible; }
+
+.team-modal.active { display: flex; }
 
 .team-modal-card {
-    background: var(--panel);
-    width: min(740px, 100%);
-    border-radius: var(--radius-lg);
+    background: #0c0c1e;
+    border: 1px solid #1e1e3f;
+    border-radius: 20px;
+    width: 750px;
+    padding: 35px;
     display: flex;
-    padding: 28px; gap: 28px;
-    border: 1px solid var(--accent-line);
+    gap: 30px;
     position: relative;
 }
 
-.modal-img-container { flex: 0 0 180px; }
 .modal-img-container img {
-    width: 100%; aspect-ratio: 1;
-    border-radius: var(--radius-md);
+    width: 200px;
+    height: 200px;
+    border-radius: 15px;
     object-fit: cover;
 }
 
-.modal-info-side { flex: 1; display: flex; flex-direction: column; gap: 15px; min-width: 0; }
 .modal-song-title {
     font-family: 'BertholdBlock', sans-serif;
-    font-size: 2rem; color: var(--gold);
+    font-size: 2.2rem;
+    color: #e8c84a;
+    margin: 10px 0;
 }
 
 .modal-player {
-    background: rgba(255,255,255,0.04);
-    padding: 10px 16px; border-radius: 50px;
-    display: flex; align-items: center; gap: 12px;
+    background: #161633;
+    padding: 12px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
 }
-.play-btn { cursor: pointer; background: var(--accent-dim); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-.player-bar-bg { flex: 1; height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; position: relative; }
-.player-bar-fill { height: 100%; background: var(--gold); border-radius: 2px; width: 0%; }
 
-.modal-score-row { display: flex; align-items: baseline; gap: 10px; }
-.score-value { font-size: 2rem; color: var(--gold); font-weight: 700; }
-
-.modal-icons-row { display: flex; align-items: center; gap: 12px; margin-top: 10px; }
-
-/* ─── JURADO ─── */
-.jurado-placeholder { display: flex; gap: 10px; }
-.dot-jurado {
-    width: 48px; height: 48px;
-    border-radius: 50%; border: 1px solid var(--accent-line);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    cursor: pointer; position: relative; background: var(--surface);
-}
-.dot-jurado.voted { border-color: var(--gold); background: var(--gold-dim); }
-.juez-score { color: var(--gold); font-weight: 700; font-size: 0.9rem; }
-.juez-label { font-size: 0.45rem; color: var(--text-3); }
-.juez-num { font-size: 0.6rem; color: var(--text-3); }
-
-.juez-input-overlay {
-    position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%);
-    background: var(--panel); border: 1px solid var(--accent);
-    padding: 10px; border-radius: 10px; display: none; z-index: 100;
-}
-.juez-input-overlay.open { display: flex; flex-direction: column; gap: 5px; }
-.juez-input-overlay input { width: 60px; text-align: center; background: #000; color: #fff; border: 1px solid #333; }
-
-/* ─── TWITCH BOTÓN ─── */
 .icon-twitch {
-    margin-left: auto;
-    padding: 8px 15px; border-radius: 8px;
-    background: rgba(145, 70, 255, 0.1);
-    border: 1px solid rgba(145, 70, 255, 0.4);
-    color: #bf94ff; display: flex; align-items: center; gap: 8px; cursor: pointer;
-}
-.twitch-dot { width: 8px; height: 8px; border-radius: 50%; background: #bf94ff; }
-
-.modal-close { position: absolute; top: 15px; right: 15px; cursor: pointer; color: var(--text-3); }
-
-@media (max-width: 600px) {
-    .team-modal-card { flex-direction: column; align-items: center; text-align: center; }
-    .modal-img-container { flex: 0 0 120px; width: 120px; }
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    border: 1px solid #333355;
+    background: #161633;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
 }
