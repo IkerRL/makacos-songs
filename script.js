@@ -4,9 +4,9 @@
 
 // ─── CONFIG TWITCH ───────────────────────────────────────────
 const TWITCH_CONFIG = {
-    canal:   'MakacaGotica',       
+    canal:   'makacagotica',       
     token:   'oauth:hhqcdtugdwdw2ivhnhaio6jr5zy29g', 
-    nick:    'MakacaGotica',       
+    nick:    'makacagotica',       
     comando: '!voto',               
 };
 
