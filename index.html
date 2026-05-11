@@ -4,64 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maka Songs - Omen Edition</title>
-    <!-- Asegúrate de que el nombre del archivo CSS sea correcto -->
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts para el estilo DM Mono -->
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Capas de ambiente estilo Omen -->
     <div class="omen-bg"></div>
     <div class="bg-energy-core"></div>
     <div class="noise-overlay"></div>
 
     <header class="main-header">
+        <!-- data-subtitle es el texto pequeño debajo del título -->
         <h1 class="titulo-principal" data-subtitle="OMEN EDITION · TEMPORADA I">MAKACOS SONGS</h1>
     </header>
 
-    <!-- El JS llenará este contenedor con las tarjetas -->
     <main class="grid-equipos" id="grid-canciones"></main>
 
-    <!-- MODAL DE ZOOM (Sincronizado con el script) -->
+    <!-- MODAL DE ZOOM -->
     <div class="team-modal" id="modal-zoom" onclick="cerrarModal()">
         <div class="team-modal-card" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="cerrarModal()">✕</button>
-            
             <div class="modal-img-container">
-                <img src="" id="zoom-img" alt="Portada de la canción">
+                <img src="" id="zoom-img" alt="Portada">
             </div>
-
             <div class="modal-info-side">
                 <div class="modal-user-row">
                     <span>👤</span>
                     <span id="zoom-user">Usuario</span>
                 </div>
-                
                 <h2 class="modal-song-title" id="zoom-titulo">Nombre de la Canción</h2>
-                
-                <!-- Reproductor de Audio -->
                 <div class="modal-player">
                     <span class="play-btn" id="btn-play">▶</span>
                     <div class="player-bar-bg" id="barra-bg">
                         <div class="player-bar-fill" id="barra-fill"></div>
                     </div>
-                    <!-- Aquí se muestra el tiempo 0:00 / 0:00 -->
                     <span class="player-time" id="tiempo-texto">0:00 / 0:00</span>
                 </div>
-
-                <!-- Puntuación Media -->
                 <div class="modal-score-row">
                     <span class="score-label">MEDIA</span>
                     <span class="score-value" id="score-media">—</span>
                 </div>
-
-                <!-- Jurado y Twitch -->
                 <div class="modal-icons-row">
                     <div class="jurado-placeholder" id="jurado-row">
-                        <!-- El JS generará los círculos de los jueces aquí -->
+                        <!-- generado por JS -->
                     </div>
-
-                    <div class="icon-twitch" id="btn-twitch">
+                    <div class="icon-twitch" id="btn-twitch" data-estado="inactivo">
                         <span class="twitch-dot"></span>
                         <span class="twitch-label">CHAT</span>
                         <span class="twitch-count"></span>
@@ -71,7 +56,6 @@
         </div>
     </div>
 
-    <!-- Carga del Script -->
     <script src="script.js"></script>
 </body>
 </html>
