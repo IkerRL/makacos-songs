@@ -1,5 +1,5 @@
 // ════════════════════════════════════════════════════════════
-//  MAKACOS SONGS — script.js (Versión Actualizada)
+//  MAKACOS SONGS — script.js (Versión con Controles de Audio)
 // ════════════════════════════════════════════════════════════
 
 const TWITCH_CONFIG = {
@@ -59,7 +59,7 @@ let twitchWS           = null;
 let twitchActivo       = false;
 let cancionModalActual = null;
 
-// ─── FUNCIÓN AUXILIAR PARA TIEMPO (NUEVO) ───
+// ─── FUNCIÓN AUXILIAR PARA TIEMPO ───
 function formatearTiempo(segundos) {
     if (isNaN(segundos)) return "0:00";
     const min = Math.floor(segundos / 60);
@@ -123,12 +123,9 @@ function calcularMedia(cancionId) {
 
 function actualizarMediaUI(cancionId) {
     var media = calcularMedia(cancionId);
-    
-    // En el Modal
     var elModal = document.getElementById('score-media');
     if (elModal) elModal.textContent = media !== null ? media : '—';
 
-    // En el Grid
     var elGrid = document.getElementById('grid-score-' + cancionId);
     if (elGrid) {
         if (media !== null) {
@@ -149,7 +146,6 @@ function renderizarGrid() {
         var media = calcularMedia(item.id);
         var scoreHTML = media !== null ? media : `<img src="${IMAGEN_PRE_VOTO}" class="score-placeholder-img">`;
 
-        // Añadimos el card-number (NUEVO)
         card.innerHTML = `
             <span class="card-number">${(index + 1).toString().padStart(2, '0')}</span>
             <div class="smoke-cover"></div>
@@ -164,8 +160,6 @@ function renderizarGrid() {
         `;
         
         card.onclick = function() {
-            // Si la tarjeta no ha sido revelada (difuminado), se revela.
-            // Si ya está revelada, se abre el modal.
             if (!card.classList.contains('revealed')) {
                 card.classList.add('revealed');
             } else {
@@ -187,7 +181,7 @@ function abrirZoom(datos) {
     audioActual.pause();
     document.getElementById('barra-fill').style.width = '0%';
     document.getElementById('btn-play').textContent = '▶';
-    document.getElementById('tiempo-texto').textContent = "0:00 / 0:00"; // Reset tiempo
+    document.getElementById('tiempo-texto').textContent = "0:00 / 0:00";
 
     document.getElementById('modal-zoom').classList.add('active');
     renderJueces(datos.id);
@@ -241,7 +235,7 @@ function renderJueces(cancionId) {
     });
 }
 
-// ─── CONTROLES ───
+// ─── CONTROLES TWITCH ───
 document.getElementById('btn-twitch').onclick = function() {
     twitchActivo = !twitchActivo;
     var dot = this.querySelector('.twitch-dot');
@@ -263,6 +257,9 @@ function actualizarUIChat() {
     }
 }
 
+// ─── CONTROLES DE AUDIO (NUEVOS) ───
+
+// Botón Play/Pausa
 document.getElementById('btn-play').onclick = function() {
     if (audioActual.paused) {
         audioActual.play();
@@ -273,20 +270,42 @@ document.getElementById('btn-play').onclick = function() {
     }
 };
 
-// ACTUALIZACIÓN DE BARRA Y TEXTO DE TIEMPO (MEJORADO)
+// Adelantar 10 segundos
+document.getElementById('btn-adelante').onclick = function() {
+    audioActual.currentTime += 10;
+};
+
+// Retroceder 10 segundos
+document.getElementById('btn-atras').onclick = function() {
+    audioActual.currentTime -= 10;
+};
+
+// Control de Volumen
+document.getElementById('volumen-slider').oninput = function() {
+    audioActual.volume = this.value;
+};
+
+// CLICK EN LA BARRA PARA ADELANTAR/RECOGER (Seek)
+document.getElementById('barra-bg').onclick = function(e) {
+    var rect = this.getBoundingClientRect();
+    var x = e.clientX - rect.left; // posición del click
+    var width = rect.width;
+    var pct = x / width;
+    audioActual.currentTime = pct * audioActual.duration;
+};
+
+// ACTUALIZACIÓN DE BARRA Y TEXTO
 audioActual.ontimeupdate = function() {
     if (audioActual.duration) {
         var pct = (audioActual.currentTime / audioActual.duration) * 100;
         document.getElementById('barra-fill').style.width = pct + '%';
         
-        // Actualizar el texto 0:00 / 0:00
         var actual = formatearTiempo(audioActual.currentTime);
         var total = formatearTiempo(audioActual.duration);
         document.getElementById('tiempo-texto').textContent = actual + " / " + total;
     }
 };
 
-// Reiniciar botón cuando termine la canción
 audioActual.onended = function() {
     document.getElementById('btn-play').textContent = '▶';
     document.getElementById('barra-fill').style.width = '0%';
