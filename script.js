@@ -9,7 +9,6 @@ const TWITCH_CONFIG = {
     comando: '!voto',               
 };
 
-const IMAGEN_PRE_VOTO = 'revelar_icono.png'; 
 
 const juecesConfig = [
     { id: 1, nombre: 'Juez 1' },
