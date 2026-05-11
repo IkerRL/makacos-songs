@@ -156,11 +156,14 @@ body {
 
 .grid-equipos {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* Usamos auto-fit y un ancho fijo (320px) para que el centrado funcione */
+    grid-template-columns: repeat(auto-fit, 320px); 
     gap: 14px;
     padding: 36px 30px;
     max-width: 1600px;
     margin: 0 auto;
+    /* Esta es la clave: centra el contenido del grid si la fila no se llena */
+    justify-content: center; 
 }
 
 /* ─── CARD ─────────────────────────────────────────────── */
