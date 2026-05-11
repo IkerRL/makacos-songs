@@ -19,7 +19,7 @@ const juecesConfig = [
 ];
 
 const cancionesData = [
-    { id: 1, titulo: "Canción Ejemplo 1", artista: "Artista 1", logo: "portada1.jpg", audio: "audio1.mp3" },
+    { id: 1, titulo: "Mandanga Style", artista: "Iker_RL", logo: "portada1.jpg", audio: "audio1.mp3" },
     { id: 2, titulo: "Canción Ejemplo 2", artista: "Artista 2", logo: "portada2.jpg", audio: "audio2.mp3" },
     { id: 3, titulo: "Canción Ejemplo 3", artista: "Artista 2", logo: "portada3.jpg", audio: "audio3.mp3" },
     { id: 4, titulo: "Canción Ejemplo 4", artista: "Artista 2", logo: "portada4.jpg", audio: "audio4.mp3" },
