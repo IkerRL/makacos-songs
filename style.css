@@ -155,20 +155,19 @@ body {
 /* ─── GRID ─────────────────────────────────────────────── */
 
 .grid-equipos {
-    display: grid;
-    /* Usamos auto-fit y un ancho fijo (320px) para que el centrado funcione */
-    grid-template-columns: repeat(auto-fit, 320px); 
+    display: flex;          /* Cambiamos Grid por Flex */
+    flex-wrap: wrap;        /* Para que las tarjetas bajen de fila */
+    justify-content: center; /* ¡ESTO es lo que centra la última fila! */
     gap: 14px;
     padding: 36px 30px;
     max-width: 1600px;
     margin: 0 auto;
-    /* Esta es la clave: centra el contenido del grid si la fila no se llena */
-    justify-content: center; 
 }
-
 /* ─── CARD ─────────────────────────────────────────────── */
 
 .card-equipo {
+    width: 320px;           /* Ancho fijo para que parezcan una rejilla */
+    flex-grow: 0;           /* Evita que se estiren de forma rara */
     height: 88px;
     background: var(--surface);
     border-radius: var(--radius-md);
@@ -177,6 +176,7 @@ body {
     overflow: hidden;
     cursor: pointer;
     transition: border-color var(--transition), transform var(--transition);
+    animation: card-in 0.4s ease both;
 }
 
 .card-equipo::before {
