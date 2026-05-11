@@ -1,345 +1,255 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Unbounded:wght@400;700;900&display=swap');
-
 @font-face {
     font-family: 'BertholdBlock';
     src: url('Berthold-Block.ttf');
 }
 
-:root {
-    --deep:      #06060f;
-    --surface:   #0c0c1e;
-    --panel:     #10102a;
-    --lift:      #16163a;
-
-    --accent:    #8b7fff;
-    --accent-dim: rgba(139, 127, 255, 0.15);
-    --accent-glow: rgba(139, 127, 255, 0.4);
-    --accent-line: rgba(139, 127, 255, 0.25);
-
-    --gold:      #e8c84a;
-    --gold-dim:  rgba(232, 200, 74, 0.12);
-
-    --text-1:    #f0eeff;
-    --text-2:    #9492b8;
-    --text-3:    #4e4c74;
-
-    --radius-sm: 8px;
-    --radius-md: 14px;
-    --radius-lg: 20px;
-
-    --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    --spring:     0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-*, *::before, *::after {
-    margin: 0; padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    background: var(--deep);
-    color: var(--text-1);
+    background-color: #06060f;
+    color: #ffffff;
     font-family: 'DM Mono', monospace;
+    margin: 0;
+    padding: 20px;
     overflow-x: hidden;
-    min-height: 100vh;
 }
 
-/* ─── FONDO ────────────────────────────────────────────── */
-.omen-bg {
-    position: fixed;
-    inset: 0;
-    z-index: -2;
-    background: var(--deep);
-}
-
-.omen-bg::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(100,85,255,0.22), transparent),
-        radial-gradient(ellipse 60% 40% at 80% 100%, rgba(80,60,200,0.14), transparent),
-        radial-gradient(ellipse 40% 30% at 10% 60%,  rgba(120,100,255,0.08), transparent);
-}
-
-.bg-energy-core {
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    width: 900px;
-    height: 900px;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(100,85,255,0.12) 0%, transparent 65%);
-    animation: core-pulse 8s ease-in-out infinite;
-    pointer-events: none;
-    z-index: -1;
-}
-
-@keyframes core-pulse {
-    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
-    50%        { opacity: 1;   transform: translate(-50%, -50%) scale(1.08); }
-}
-
-.noise-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-    pointer-events: none;
-}
-
-/* ─── HEADER (NUEVO: MONOS A LOS LADOS) ────────────────── */
-.main-header {
-    position: relative;
-    padding: 50px 30px;
-    border-bottom: 1px solid var(--accent-line);
-    display: flex;             /* Para alinear monos y título */
-    align-items: center;       /* Centrado vertical */
-    justify-content: center;    /* Centrado horizontal */
-    gap: 40px;                 /* Espacio entre los monos y el texto */
-}
-
-.main-header::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 10%;
-    width: 80%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-}
-
-.header-icon {
-    width: 85px;               /* Tamaño del babuino */
-    height: auto;
-    filter: drop-shadow(0 0 15px var(--accent-glow));
-    flex-shrink: 0;
-}
-
-/* El segundo mono mira hacia el otro lado */
-.header-icon:last-of-type {
-    transform: scaleX(-1);
-}
-
-.titulo-principal {
-    font-family: 'BertholdBlock', 'Unbounded', sans-serif;
-    font-size: clamp(2rem, 5vw, 4rem);
-    font-weight: 900;
-    letter-spacing: 0.06em;
-    color: var(--text-1);
-    text-shadow: 0 0 40px var(--accent-glow);
-    text-align: center;
-}
-
-.titulo-principal::after {
-    content: attr(data-subtitle);
-    display: block;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    font-weight: 400;
-    letter-spacing: 0.35em;
-    color: var(--text-3);
-    margin-top: 10px;
-    text-shadow: none;
-}
-
-/* ─── GRID (ACTUALIZADO PARA CENTRAR FILA 29-30) ────────── */
+/* --- GRID --- */
 .grid-equipos {
-    display: flex;             /* Cambiado de Grid a Flex */
-    flex-wrap: wrap;           /* Permite varias filas */
-    justify-content: center;   /* CENTRA LOS ELEMENTOS SOBRANTES */
-    gap: 14px;
-    padding: 36px 30px;
-    max-width: 1600px;
-    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
 
-/* ─── CARD ─────────────────────────────────────────────── */
 .card-equipo {
-    width: 320px;              /* Ancho fijo para mantener orden */
-    height: 88px;
-    background: var(--surface);
-    border-radius: var(--radius-md);
-    border: 1px solid rgba(139,127,255,0.1);
+    background: #0c0c1e;
+    border: 1px solid #1e1e3f;
+    border-radius: 15px;
+    height: 110px;
     position: relative;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
     cursor: pointer;
-    transition: border-color var(--transition), transform var(--transition);
-    animation: card-in 0.4s ease both;
+    overflow: hidden; /* Importante para el humo */
+    transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .card-equipo:hover {
-    border-color: rgba(139,127,255,0.35);
+    border-color: #8b7fff;
     transform: translateY(-2px);
 }
 
+/* Efecto de Revelado (NUEVO) */
+.card-equipo .vol-text {
+    filter: blur(12px); /* Empieza borroso */
+    transition: filter 0.5s ease, color 0.3s ease;
+    user-select: none;
+}
+
+.card-equipo.revealed .vol-text {
+    filter: blur(0); /* Se aclara al hacer click */
+}
+
+/* El número de la tarjeta */
 .card-number {
     position: absolute;
     top: 8px;
-    right: 12px;
-    font-size: 0.6rem;
-    color: var(--text-3);
-    z-index: 5;
+    left: 12px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.3); /* Un poco transparente para estilo Omen */
+    z-index: 2;
 }
 
+/* Capa de Humo/Efecto visual (NUEVO) */
 .smoke-cover {
     position: absolute;
     inset: 0;
-    z-index: 10;
-    background: var(--panel);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.6s var(--transition);
-}
-
-.smoke-cover::after {
-    content: "REVELAR";
-    color: var(--text-3);
-    font-size: 0.55rem;
-    letter-spacing: 0.4em;
-}
-
-.card-equipo.revealed .smoke-cover {
-    transform: translateY(-100%);
+    background: linear-gradient(90deg, rgba(139, 127, 255, 0.05) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
 }
 
 .equipo-content {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 0 16px;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.4s ease 0.15s;
-}
-
-.card-equipo.revealed .equipo-content {
-    opacity: 1;
+    width: 100%;
+    z-index: 2;
 }
 
 .equipo-logo {
-    width: 52px; height: 52px;
-    border-radius: var(--radius-sm);
+    width: 65px;
+    height: 65px;
+    border-radius: 12px;
     object-fit: cover;
-    border: 1px solid rgba(139,127,255,0.15);
+    border: 1px solid #333355;
+}
+
+.equipo-info {
+    flex: 1;
+    margin-left: 20px;
 }
 
 .nombre-equipo {
     display: block;
     font-family: 'BertholdBlock', sans-serif;
-    font-size: 0.82rem;
-    color: var(--text-1);
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .artista-equipo {
     display: block;
-    font-size: 0.65rem;
-    color: var(--accent);
+    color: #8b7fff;
+    font-size: 0.8rem;
+    text-transform: uppercase;
 }
 
 .vol-text {
-    font-family: 'DM Mono', monospace;
-    font-size: 1.5rem;
-    color: var(--gold);
-    margin-left: auto;
+    font-family: 'BertholdBlock', sans-serif;
+    font-size: 2.2rem;
+    color: #e8c84a;
 }
 
-/* ─── MODAL ────────────────────────────────────────────── */
+.score-placeholder-img {
+    width: 35px;
+    height: 35px;
+    opacity: 0.7;
+}
+
+/* --- MODAL --- */
 .team-modal {
     position: fixed;
     inset: 0;
-    background: rgba(4, 4, 12, 0.9);
-    display: flex;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(5px);
+    display: none;
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    backdrop-filter: blur(10px);
-    transition: all 0.4s ease;
 }
 
-.team-modal.active {
-    opacity: 1;
-    visibility: visible;
-}
+.team-modal.active { display: flex; }
 
 .team-modal-card {
-    background: var(--panel);
-    width: min(740px, 95%);
-    border-radius: var(--radius-lg);
+    background: #0c0c1e;
+    border: 1px solid #1e1e3f;
+    border-radius: 20px;
+    width: 800px;
+    padding: 40px;
     display: flex;
-    padding: 28px;
-    gap: 28px;
-    border: 1px solid var(--accent-line);
+    gap: 35px;
     position: relative;
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0.5;
 }
 
 .modal-img-container img {
-    width: 180px;
-    height: 180px;
-    border-radius: var(--radius-md);
+    width: 250px;
+    height: 250px;
+    border-radius: 15px;
     object-fit: cover;
+    border: 2px solid #1e1e3f;
 }
-
-.modal-info-side { flex: 1; display: flex; flex-direction: column; gap: 15px; }
 
 .modal-song-title {
     font-family: 'BertholdBlock', sans-serif;
-    font-size: 2rem;
-    color: var(--gold);
+    font-size: 2.8rem;
+    color: #e8c84a;
+    margin: 5px 0;
+    line-height: 1;
 }
 
 .modal-player {
-    background: rgba(255,255,255,0.04);
-    padding: 10px 15px;
+    background: #161633;
+    padding: 15px 25px;
     border-radius: 50px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
+    margin: 20px 0;
 }
 
+.play-btn { cursor: pointer; font-size: 1.2rem; }
+
 .player-bar-bg {
-    flex: 1; height: 4px; background: rgba(255,255,255,0.1);
-    position: relative; border-radius: 2px;
+    flex: 1;
+    height: 6px;
+    background: #2a2a5a;
+    border-radius: 10px;
+    position: relative;
 }
 
 .player-bar-fill {
-    height: 100%; background: var(--accent);
-    width: 0%; border-radius: 2px;
+    position: absolute;
+    left: 0; top: 0; height: 100%;
+    background: #e8c84a;
+    width: 0%;
+    border-radius: 10px;
 }
 
-.play-btn { cursor: pointer; }
+.player-time { font-size: 0.75rem; min-width: 75px; color: #8b7fff; }
 
-/* ─── PUNTUACIONES ─── */
-.modal-score-row { display: flex; align-items: baseline; gap: 10px; }
-.score-value { font-size: 2rem; color: var(--gold); font-weight: bold; }
+/* JURADO (Dots) */
+.jurado-placeholder {
+    display: flex;
+    gap: 10px;
+}
 
 .dot-jurado {
-    width: 45px; height: 45px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #333355;
     border-radius: 50%;
-    background: rgba(139,127,255,0.1);
-    border: 1px solid var(--accent-line);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.7rem; color: var(--text-2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: #0c0c1e;
 }
 
-.dot-jurado.voted { border-color: var(--gold); color: var(--gold); }
+.dot-jurado.voted { border-color: #00e5a0; }
 
-.modal-close {
-    position: absolute; top: 15px; right: 15px;
-    background: none; border: none; color: var(--text-3);
-    font-size: 1.2rem; cursor: pointer;
+.juez-score { font-weight: bold; color: #00e5a0; font-size: 1.1rem; }
+.juez-label { font-size: 0.6rem; color: #666; }
+.juez-num { font-size: 0.8rem; color: #444; }
+
+/* INPUT OVERLAY JUEZ */
+.juez-input-overlay {
+    position: absolute;
+    bottom: 60px;
+    background: #1e1e3f;
+    padding: 10px;
+    border-radius: 8px;
+    display: none;
+    z-index: 10;
+}
+.juez-input-overlay.open { display: flex; gap: 5px; }
+.juez-input-overlay input { width: 50px; background: #06060f; color: white; border: 1px solid #8b7fff; }
+
+.icon-twitch {
+    border: 1px solid #333355;
+    background: #161633;
+    padding: 10px 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
 }
 
-/* --- SCROLLBAR --- */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--deep); }
-::-webkit-scrollbar-thumb { background: var(--accent-line); border-radius: 3px; }
-
-@keyframes card-in {
-    from { opacity: 0; transform: translateY(15px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
+.twitch-dot { width: 8px; height: 8px; border-radius: 50%; background: #e8c84a; }
+.twitch-label { font-size: 0.7rem; font-weight: bold; }
+.twitch-count { color: #8b7fff; font-weight: bold; }
