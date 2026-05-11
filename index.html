@@ -5,56 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maka Songs - Omen Edition</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Fuente para el estilo visual -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Capas de ambiente visual -->
     <div class="omen-bg"></div>
     <div class="bg-energy-core"></div>
     <div class="noise-overlay"></div>
 
-<header class="main-header">
-    <div class="header-content">
-        <img src="mono.png" class="header-icon" alt="Icono Babuino">
-        
+    <header class="main-header">
         <h1 class="titulo-principal" data-subtitle="MAKACAGOTICA">BABUINOS SONGS</h1>
-        
-        <img src="mono.png" class="header-icon" alt="Icono Babuino">
-    </div>
-</header>
+    </header>
 
+    <!-- Contenedor de canciones -->
     <main class="grid-equipos" id="grid-canciones"></main>
 
     <!-- MODAL DE ZOOM -->
     <div class="team-modal" id="modal-zoom" onclick="cerrarModal()">
         <div class="team-modal-card" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="cerrarModal()">✕</button>
+            
             <div class="modal-img-container">
                 <img src="" id="zoom-img" alt="Portada">
             </div>
+
             <div class="modal-info-side">
                 <div class="modal-user-row">
                     <span>👤</span>
                     <span id="zoom-user">Usuario</span>
                 </div>
+                
                 <h2 class="modal-song-title" id="zoom-titulo">Nombre de la Canción</h2>
+                
+                <!-- REPRODUCTOR DE AUDIO CON NUEVOS CONTROLES -->
                 <div class="modal-player">
-                    <span class="play-btn" id="btn-play">▶</span>
-                    <span class="control-skip" id="btn-adelante">⏩</span>
-<input type="range" id="volumen-slider" min="0" max="1" step="0.1" value="1" style="width: 80px; margin-left: 10px;">
-                    <span class="control-skip" id="btn-atras">⏪</span>
-                    <div class="player-bar-bg" id="barra-bg">
+                    <!-- Botones de control -->
+                    <div class="player-btns">
+                        <span class="control-skip" id="btn-atras" title="Retroceder 10s">⏪</span>
+                        <span class="play-btn" id="btn-play">▶</span>
+                        <span class="control-skip" id="btn-adelante" title="Adelantar 10s">⏩</span>
+                    </div>
+
+                    <!-- Barra de progreso -->
+                    <div class="player-bar-bg" id="barra-bg" style="cursor: pointer;">
                         <div class="player-bar-fill" id="barra-fill"></div>
                     </div>
+
+                    <!-- Tiempo -->
                     <span class="player-time" id="tiempo-texto">0:00 / 0:00</span>
+
+                    <!-- Control de Volumen -->
+                    <div class="volume-container">
+                        <span style="font-size: 0.8rem;">🔊</span>
+                        <input type="range" id="volumen-slider" min="0" max="1" step="0.1" value="1">
+                    </div>
                 </div>
+
+                <!-- Puntuación Media -->
                 <div class="modal-score-row">
                     <span class="score-label">MEDIA</span>
                     <span class="score-value" id="score-media">—</span>
                 </div>
+
+                <!-- Jurado y Twitch -->
                 <div class="modal-icons-row">
                     <div class="jurado-placeholder" id="jurado-row">
-                        <!-- generado por JS -->
+                        <!-- Generado por JS -->
                     </div>
-                    <div class="icon-twitch" id="btn-twitch" data-estado="inactivo">
+
+                    <div class="icon-twitch" id="btn-twitch">
                         <span class="twitch-dot"></span>
                         <span class="twitch-label">CHAT</span>
                         <span class="twitch-count"></span>
