@@ -12,8 +12,8 @@ const TWITCH_CONFIG = {
 const IMAGEN_PRE_VOTO = 'revelar_icono.png'; 
 
 const juecesConfig = [
-    { id: 1, nombre: 'Juez 1' },
-    { id: 2, nombre: 'Juez 2' },
+    { id: 1, nombre: 'Valeria' },
+    { id: 2, nombre: 'Iker' },
     { id: 3, nombre: 'Juez 3' },
     { id: 4, nombre: 'Juez Pito' },
 ];
