@@ -5,11 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maka Songs - Omen Edition</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Fuente para el estilo visual -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Capas de ambiente visual -->
     <div class="omen-bg"></div>
     <div class="bg-energy-core"></div>
     <div class="noise-overlay"></div>
@@ -18,7 +16,6 @@
         <h1 class="titulo-principal" data-subtitle="MAKACAGOTICA">BABUINOS SONGS</h1>
     </header>
 
-    <!-- Contenedor de canciones -->
     <main class="grid-equipos" id="grid-canciones"></main>
 
     <!-- MODAL DE ZOOM -->
@@ -38,42 +35,40 @@
                 
                 <h2 class="modal-song-title" id="zoom-titulo">Nombre de la Canción</h2>
                 
-                <!-- REPRODUCTOR DE AUDIO CON NUEVOS CONTROLES -->
+                <!-- REPRODUCTOR PRO -->
                 <div class="modal-player">
-                    <!-- Botones de control -->
-                    <div class="player-btns">
-                        <span class="control-skip" id="btn-atras" title="Retroceder 10s">⏪</span>
-                        <span class="play-btn" id="btn-play">▶</span>
-                        <span class="control-skip" id="btn-adelante" title="Adelantar 10s">⏩</span>
+                    <div class="player-controls">
+                        <button class="audio-icon-btn" id="btn-atras">
+                            <svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg>
+                        </button>
+                        
+                        <button class="audio-icon-btn main-play" id="btn-play">▶</button>
+                        
+                        <button class="audio-icon-btn" id="btn-adelante">
+                            <svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg>
+                        </button>
                     </div>
 
-                    <!-- Barra de progreso -->
-                    <div class="player-bar-bg" id="barra-bg" style="cursor: pointer;">
-                        <div class="player-bar-fill" id="barra-fill"></div>
+                    <div class="player-timeline">
+                        <div class="player-bar-bg" id="barra-bg">
+                            <div class="player-bar-fill" id="barra-fill"></div>
+                        </div>
+                        <span class="player-time" id="tiempo-texto">0:00 / 0:00</span>
                     </div>
 
-                    <!-- Tiempo -->
-                    <span class="player-time" id="tiempo-texto">0:00 / 0:00</span>
-
-                    <!-- Control de Volumen -->
-                    <div class="volume-container">
-                        <span style="font-size: 0.8rem;">🔊</span>
-                        <input type="range" id="volumen-slider" min="0" max="1" step="0.1" value="1">
+                    <div class="volume-control">
+                        <span class="vol-icon">🔊</span>
+                        <input type="range" id="volumen-slider" min="0" max="1" step="0.05" value="1">
                     </div>
                 </div>
 
-                <!-- Puntuación Media -->
                 <div class="modal-score-row">
                     <span class="score-label">MEDIA</span>
                     <span class="score-value" id="score-media">—</span>
                 </div>
 
-                <!-- Jurado y Twitch -->
                 <div class="modal-icons-row">
-                    <div class="jurado-placeholder" id="jurado-row">
-                        <!-- Generado por JS -->
-                    </div>
-
+                    <div class="jurado-placeholder" id="jurado-row"></div>
                     <div class="icon-twitch" id="btn-twitch">
                         <span class="twitch-dot"></span>
                         <span class="twitch-label">CHAT</span>
