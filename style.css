@@ -855,3 +855,29 @@ body {
         gap: 10px;
     }
 }
+/* --- ARREGLO PARA QUE LOS MONOS ESTÉN A LOS LADOS --- */
+.main-header {
+    position: relative;
+    padding: 52px 30px 40px;
+    border-bottom: 1px solid var(--accent-line);
+    
+    /* Añadimos esto para alinear los hijos en horizontal */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px; /* Espacio entre mono y título */
+}
+
+/* Ajuste para que el título no empuje a los monos hacia afuera */
+.titulo-principal {
+    margin: 0; 
+    text-align: center;
+}
+
+/* Estilo de los monos */
+.header-icon {
+    width: 80px;  /* Ajusta el tamaño aquí */
+    height: auto;
+    filter: drop-shadow(0 0 15px var(--accent-glow));
+    flex-shrink: 0; /* Evita que se aplasten */
+}
