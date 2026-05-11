@@ -1,20 +1,15 @@
 // ════════════════════════════════════════════════════════════
-//  MAKACOS SONGS — script.js
+//  MAKACOS SONGS — script.js (Versión Actualizada)
 // ════════════════════════════════════════════════════════════
 
 const TWITCH_CONFIG = {
-
-    canal:   'makacagotica',       
-
-    token:   'oauth:hhqcdtugdwdw2ivhnhaio6jr5zy29g', 
-
-    nick:    'makacagotica',       
-
+    canal:  'makacagotica',       
+    token:  'oauth:hhqcdtugdwdw2ivhnhaio6jr5zy29g', 
+    nick:   'makacagotica',       
     comando: '!voto',               
-
 };
 
-const IMAGEN_PRE_VOTO = 'revelar_icono.png'; // Tu imagen placeholder
+const IMAGEN_PRE_VOTO = 'revelar_icono.png'; 
 
 const juecesConfig = [
     { id: 1, nombre: 'Juez 1' },
@@ -25,6 +20,7 @@ const juecesConfig = [
 const cancionesData = [
     { id: 1, titulo: "Canción Ejemplo 1", artista: "Artista 1", logo: "portada1.jpg", audio: "audio1.mp3" },
     { id: 2, titulo: "Canción Ejemplo 2", artista: "Artista 2", logo: "portada2.jpg", audio: "audio2.mp3" },
+    // Añade aquí el resto de canciones...
 ];
 
 // ESTADO
@@ -34,6 +30,14 @@ let audioActual        = new Audio();
 let twitchWS           = null;
 let twitchActivo       = false;
 let cancionModalActual = null;
+
+// ─── FUNCIÓN AUXILIAR PARA TIEMPO (NUEVO) ───
+function formatearTiempo(segundos) {
+    if (isNaN(segundos)) return "0:00";
+    const min = Math.floor(segundos / 60);
+    const seg = Math.floor(segundos % 60);
+    return min + ":" + (seg < 10 ? '0' : '') + seg;
+}
 
 // ─── CONEXIÓN TWITCH ───
 function conectarTwitch() {
@@ -117,7 +121,9 @@ function renderizarGrid() {
         var media = calcularMedia(item.id);
         var scoreHTML = media !== null ? media : `<img src="${IMAGEN_PRE_VOTO}" class="score-placeholder-img">`;
 
+        // Añadimos el card-number (NUEVO)
         card.innerHTML = `
+            <span class="card-number">${(index + 1).toString().padStart(2, '0')}</span>
             <div class="smoke-cover"></div>
             <div class="equipo-content">
                 <img src="${item.logo}" class="equipo-logo">
@@ -128,9 +134,15 @@ function renderizarGrid() {
                 <span class="vol-text" id="grid-score-${item.id}">${scoreHTML}</span>
             </div>
         `;
+        
         card.onclick = function() {
-            if (!card.classList.contains('revealed')) card.classList.add('revealed');
-            else abrirZoom(item);
+            // Si la tarjeta no ha sido revelada (difuminado), se revela.
+            // Si ya está revelada, se abre el modal.
+            if (!card.classList.contains('revealed')) {
+                card.classList.add('revealed');
+            } else {
+                abrirZoom(item);
+            }
         };
         grid.appendChild(card);
     });
@@ -147,6 +159,7 @@ function abrirZoom(datos) {
     audioActual.pause();
     document.getElementById('barra-fill').style.width = '0%';
     document.getElementById('btn-play').textContent = '▶';
+    document.getElementById('tiempo-texto').textContent = "0:00 / 0:00"; // Reset tiempo
 
     document.getElementById('modal-zoom').classList.add('active');
     renderJueces(datos.id);
@@ -232,9 +245,23 @@ document.getElementById('btn-play').onclick = function() {
     }
 };
 
+// ACTUALIZACIÓN DE BARRA Y TEXTO DE TIEMPO (MEJORADO)
 audioActual.ontimeupdate = function() {
-    var pct = (audioActual.currentTime / audioActual.duration) * 100;
-    document.getElementById('barra-fill').style.width = pct + '%';
+    if (audioActual.duration) {
+        var pct = (audioActual.currentTime / audioActual.duration) * 100;
+        document.getElementById('barra-fill').style.width = pct + '%';
+        
+        // Actualizar el texto 0:00 / 0:00
+        var actual = formatearTiempo(audioActual.currentTime);
+        var total = formatearTiempo(audioActual.duration);
+        document.getElementById('tiempo-texto').textContent = actual + " / " + total;
+    }
+};
+
+// Reiniciar botón cuando termine la canción
+audioActual.onended = function() {
+    document.getElementById('btn-play').textContent = '▶';
+    document.getElementById('barra-fill').style.width = '0%';
 };
 
 window.onload = renderizarGrid;
