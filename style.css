@@ -36,13 +36,6 @@
     box-sizing: border-box;
 }
 
-::selection {
-    background: var(--accent-dim);
-    color: var(--accent);
-}
-
-html { scroll-behavior: smooth; }
-
 body {
     background: var(--deep);
     color: var(--text-1);
@@ -52,7 +45,6 @@ body {
 }
 
 /* ─── FONDO ────────────────────────────────────────────── */
-
 .omen-bg {
     position: fixed;
     inset: 0;
@@ -85,10 +77,9 @@ body {
 
 @keyframes core-pulse {
     0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
-    50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.08); }
+    50%        { opacity: 1;   transform: translate(-50%, -50%) scale(1.08); }
 }
 
-/* Grain overlay */
 .noise-overlay {
     position: fixed;
     inset: 0;
@@ -98,24 +89,15 @@ body {
     pointer-events: none;
 }
 
-/* Líneas de grid decorativas */
-.omen-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(rgba(139,127,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(139,127,255,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-}
-
-/* ─── HEADER ───────────────────────────────────────────── */
-
+/* ─── HEADER (NUEVO: MONOS A LOS LADOS) ────────────────── */
 .main-header {
     position: relative;
-    padding: 52px 30px 40px;
-    text-align: center;
+    padding: 50px 30px;
     border-bottom: 1px solid var(--accent-line);
+    display: flex;             /* Para alinear monos y título */
+    align-items: center;       /* Centrado vertical */
+    justify-content: center;    /* Centrado horizontal */
+    gap: 40px;                 /* Espacio entre los monos y el texto */
 }
 
 .main-header::after {
@@ -128,16 +110,26 @@ body {
     background: linear-gradient(90deg, transparent, var(--accent), transparent);
 }
 
+.header-icon {
+    width: 85px;               /* Tamaño del babuino */
+    height: auto;
+    filter: drop-shadow(0 0 15px var(--accent-glow));
+    flex-shrink: 0;
+}
+
+/* El segundo mono mira hacia el otro lado */
+.header-icon:last-of-type {
+    transform: scaleX(-1);
+}
+
 .titulo-principal {
     font-family: 'BertholdBlock', 'Unbounded', sans-serif;
     font-size: clamp(2rem, 5vw, 4rem);
     font-weight: 900;
     letter-spacing: 0.06em;
     color: var(--text-1);
-    text-shadow:
-        0 0 40px var(--accent-glow),
-        0 0 80px rgba(139,127,255,0.2);
-    position: relative;
+    text-shadow: 0 0 40px var(--accent-glow);
+    text-align: center;
 }
 
 .titulo-principal::after {
@@ -152,22 +144,20 @@ body {
     text-shadow: none;
 }
 
-/* ─── GRID ─────────────────────────────────────────────── */
-
+/* ─── GRID (ACTUALIZADO PARA CENTRAR FILA 29-30) ────────── */
 .grid-equipos {
-    display: flex;          /* Cambiamos Grid por Flex */
-    flex-wrap: wrap;        /* Para que las tarjetas bajen de fila */
-    justify-content: center; /* ¡ESTO es lo que centra la última fila! */
+    display: flex;             /* Cambiado de Grid a Flex */
+    flex-wrap: wrap;           /* Permite varias filas */
+    justify-content: center;   /* CENTRA LOS ELEMENTOS SOBRANTES */
     gap: 14px;
     padding: 36px 30px;
     max-width: 1600px;
     margin: 0 auto;
 }
-/* ─── CARD ─────────────────────────────────────────────── */
 
+/* ─── CARD ─────────────────────────────────────────────── */
 .card-equipo {
-    width: 320px;           /* Ancho fijo para que parezcan una rejilla */
-    flex-grow: 0;           /* Evita que se estiren de forma rara */
+    width: 320px;              /* Ancho fijo para mantener orden */
     height: 88px;
     background: var(--surface);
     border-radius: var(--radius-md);
@@ -179,38 +169,20 @@ body {
     animation: card-in 0.4s ease both;
 }
 
-.card-equipo::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--accent-dim), transparent 60%);
-    opacity: 0;
-    transition: opacity var(--transition);
-    z-index: 1;
-}
-
 .card-equipo:hover {
     border-color: rgba(139,127,255,0.35);
     transform: translateY(-2px);
 }
 
-.card-equipo:hover::before {
-    opacity: 1;
-}
-
-/* Número de posición */
 .card-number {
     position: absolute;
     top: 8px;
     right: 12px;
     font-size: 0.6rem;
-    letter-spacing: 0.2em;
     color: var(--text-3);
     z-index: 5;
-    font-family: 'DM Mono', monospace;
 }
 
-/* Smoke cover */
 .smoke-cover {
     position: absolute;
     inset: 0;
@@ -219,15 +191,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: var(--radius-md);
-}
-
-.smoke-cover::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(139,127,255,0.06), transparent);
+    transition: 0.6s var(--transition);
 }
 
 .smoke-cover::after {
@@ -235,28 +199,12 @@ body {
     color: var(--text-3);
     font-size: 0.55rem;
     letter-spacing: 0.4em;
-    font-family: 'DM Mono', monospace;
-    transition: color var(--transition);
-}
-
-.card-equipo:hover .smoke-cover::after {
-    color: var(--accent);
 }
 
 .card-equipo.revealed .smoke-cover {
     transform: translateY(-100%);
 }
 
-.card-equipo.revealed {
-    cursor: default;
-}
-
-.card-equipo.revealed:hover {
-    transform: translateY(-2px);
-    cursor: pointer;
-}
-
-/* Contenido */
 .equipo-content {
     display: flex;
     align-items: center;
@@ -264,620 +212,134 @@ body {
     padding: 0 16px;
     height: 100%;
     opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.4s ease 0.15s, transform 0.4s ease 0.15s;
-    position: relative;
-    z-index: 2;
+    transition: opacity 0.4s ease 0.15s;
 }
 
 .card-equipo.revealed .equipo-content {
     opacity: 1;
-    transform: translateY(0);
 }
 
 .equipo-logo {
-    width: 52px;
-    height: 52px;
+    width: 52px; height: 52px;
     border-radius: var(--radius-sm);
     object-fit: cover;
     border: 1px solid rgba(139,127,255,0.15);
-    flex-shrink: 0;
-}
-
-.equipo-info {
-    flex: 1;
-    min-width: 0;
 }
 
 .nombre-equipo {
     display: block;
-    font-family: 'BertholdBlock', 'Unbounded', sans-serif;
+    font-family: 'BertholdBlock', sans-serif;
     font-size: 0.82rem;
-    letter-spacing: 0.04em;
     color: var(--text-1);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .artista-equipo {
     display: block;
     font-size: 0.65rem;
     color: var(--accent);
-    letter-spacing: 0.1em;
-    margin-top: 3px;
-    opacity: 0.8;
 }
 
 .vol-text {
     font-family: 'DM Mono', monospace;
     font-size: 1.5rem;
-    font-weight: 500;
     color: var(--gold);
-    text-shadow: 0 0 20px rgba(232,200,74,0.4);
-    flex-shrink: 0;
-    letter-spacing: -0.02em;
+    margin-left: auto;
 }
 
-/* Score highlight top 3 */
-.card-equipo.top-1 .vol-text { color: #ffd700; }
-.card-equipo.top-2 .vol-text { color: #c0c0c0; }
-.card-equipo.top-3 .vol-text { color: #cd7f32; }
-
 /* ─── MODAL ────────────────────────────────────────────── */
-
 .team-modal {
     position: fixed;
     inset: 0;
-    background: rgba(4, 4, 12, 0.88);
+    background: rgba(4, 4, 12, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    backdrop-filter: blur(0px) saturate(1);
-    transition:
-        opacity 0.4s ease,
-        backdrop-filter 0.4s ease,
-        visibility 0.4s;
-    padding: 20px;
+    backdrop-filter: blur(10px);
+    transition: all 0.4s ease;
 }
 
 .team-modal.active {
     opacity: 1;
     visibility: visible;
-    backdrop-filter: blur(16px) saturate(1.5);
 }
 
 .team-modal-card {
     background: var(--panel);
-    width: min(740px, 100%);
+    width: min(740px, 95%);
     border-radius: var(--radius-lg);
     display: flex;
     padding: 28px;
     gap: 28px;
-    align-items: center;
     border: 1px solid var(--accent-line);
-    transform: scale(0.88) translateY(24px);
-    transition: transform var(--spring);
     position: relative;
-    overflow: hidden;
-}
-
-.team-modal-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-}
-
-.team-modal-card::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 30% 0%, var(--accent-dim), transparent 60%);
-    pointer-events: none;
-}
-
-.team-modal.active .team-modal-card {
-    transform: scale(1) translateY(0);
-}
-
-/* Imagen modal */
-.modal-img-container {
-    flex: 0 0 180px;
-    position: relative;
-    z-index: 1;
 }
 
 .modal-img-container img {
-    width: 100%;
-    aspect-ratio: 1;
+    width: 180px;
+    height: 180px;
     border-radius: var(--radius-md);
     object-fit: cover;
-    border: 1px solid rgba(139,127,255,0.2);
-    opacity: 0;
-    transform: scale(0.92) rotate(-2deg);
-    transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
-    display: block;
 }
 
-.team-modal.active .modal-img-container img {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-}
-
-/* Info modal */
-.modal-info-side {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    min-width: 0;
-    position: relative;
-    z-index: 1;
-}
-
-.modal-user-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-2);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-}
+.modal-info-side { flex: 1; display: flex; flex-direction: column; gap: 15px; }
 
 .modal-song-title {
-    font-family: 'BertholdBlock', 'Unbounded', sans-serif;
-    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-family: 'BertholdBlock', sans-serif;
+    font-size: 2rem;
     color: var(--gold);
-    letter-spacing: 0.03em;
-    line-height: 1.1;
-    text-shadow: 0 0 30px rgba(232,200,74,0.3);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-/* Player */
 .modal-player {
     background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.07);
-    padding: 10px 16px;
+    padding: 10px 15px;
     border-radius: 50px;
     display: flex;
     align-items: center;
-    gap: 12px;
-}
-
-.play-btn {
-    cursor: pointer;
-    color: var(--text-1);
-    font-size: 0.9rem;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--accent-dim);
-    border-radius: 50%;
-    transition: background var(--transition), transform 0.15s;
-    flex-shrink: 0;
-    border: 1px solid var(--accent-line);
-}
-
-.play-btn:hover {
-    background: rgba(139,127,255,0.3);
-    transform: scale(1.08);
+    gap: 10px;
 }
 
 .player-bar-bg {
-    flex: 1;
-    height: 3px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 2px;
-    cursor: pointer;
-    position: relative;
+    flex: 1; height: 4px; background: rgba(255,255,255,0.1);
+    position: relative; border-radius: 2px;
 }
 
 .player-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--gold));
-    border-radius: 2px;
-    transition: width 0.1s linear;
-    position: relative;
+    height: 100%; background: var(--accent);
+    width: 0%; border-radius: 2px;
 }
 
-.player-bar-fill::after {
-    content: '';
-    position: absolute;
-    right: -4px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--gold);
-    box-shadow: 0 0 8px rgba(232,200,74,0.6);
-}
+.play-btn { cursor: pointer; }
 
-.player-time {
-    font-size: 0.65rem;
-    color: var(--text-2);
-    letter-spacing: 0.05em;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
+/* ─── PUNTUACIONES ─── */
+.modal-score-row { display: flex; align-items: baseline; gap: 10px; }
+.score-value { font-size: 2rem; color: var(--gold); font-weight: bold; }
 
-/* Icons row */
-.modal-icons-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.jurado-placeholder {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-/* ── Juez base ── */
 .dot-jurado {
-    width: 48px;
-    height: 48px;
-    background: rgba(139,127,255,0.06);
+    width: 45px; height: 45px;
     border-radius: 50%;
-    border: 1px solid rgba(139,127,255,0.2);
-    transition: background var(--transition), border-color var(--transition), transform var(--transition);
-    cursor: pointer;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 2px;
-    user-select: none;
-    overflow: visible;
-}
-
-.dot-jurado:hover {
-    background: rgba(139,127,255,0.14);
-    border-color: var(--accent);
-    transform: scale(1.06);
-}
-
-/* Foto del juez (cuando esté disponible) */
-.dot-jurado img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    position: absolute;
-    inset: 0;
-}
-
-/* Número del juez (placeholder sin foto) */
-.juez-num {
-    font-size: 0.55rem;
-    color: var(--text-3);
-    letter-spacing: 0.1em;
-    line-height: 1;
-}
-
-/* Hint "2x" visible en hover si no ha votado */
-.dot-jurado:not(.voted)::after {
-    content: '2×';
-    position: absolute;
-    bottom: -18px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.5rem;
-    color: var(--text-3);
-    letter-spacing: 0.05em;
-    opacity: 0;
-    transition: opacity var(--transition);
-    white-space: nowrap;
-}
-.dot-jurado:not(.voted):hover::after {
-    opacity: 1;
-}
-
-/* Estado: votado */
-.dot-jurado.voted {
-    border-color: var(--gold);
-    background: var(--gold-dim);
-    cursor: default;
-}
-
-.dot-jurado.voted:hover {
-    transform: scale(1);
-    border-color: var(--gold);
-}
-
-.juez-score {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--gold);
-    line-height: 1;
-}
-
-.juez-label {
-    font-size: 0.45rem;
-    color: var(--text-3);
-    letter-spacing: 0.12em;
-    line-height: 1;
-}
-
-/* ── Input overlay de votación ── */
-.juez-input-overlay {
-    position: absolute;
-    bottom: calc(100% + 10px);
-    left: 50%;
-    transform: translateX(-50%) scale(0.85);
-    background: var(--panel);
+    background: rgba(139,127,255,0.1);
     border: 1px solid var(--accent-line);
-    border-radius: var(--radius-md);
-    padding: 10px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    align-items: center;
-    z-index: 50;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-    width: 120px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; color: var(--text-2);
 }
 
-.juez-input-overlay::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 5px solid transparent;
-    border-top-color: var(--accent-line);
-}
-
-.juez-input-overlay.open {
-    opacity: 1;
-    pointer-events: all;
-    transform: translateX(-50%) scale(1);
-}
-
-.juez-input-overlay label {
-    font-size: 0.55rem;
-    color: var(--text-3);
-    letter-spacing: 0.2em;
-}
-
-.juez-input-overlay input[type="number"] {
-    width: 80px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--accent-line);
-    border-radius: var(--radius-sm);
-    color: var(--gold);
-    font-family: 'DM Mono', monospace;
-    font-size: 1.1rem;
-    text-align: center;
-    padding: 4px 8px;
-    outline: none;
-    -moz-appearance: textfield;
-}
-
-.juez-input-overlay input[type="number"]::-webkit-inner-spin-button,
-.juez-input-overlay input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-}
-
-.juez-input-overlay input[type="number"]:focus {
-    border-color: var(--accent);
-}
-
-.juez-confirm-btn {
-    width: 80px;
-    padding: 4px 0;
-    background: var(--accent-dim);
-    border: 1px solid var(--accent-line);
-    border-radius: var(--radius-sm);
-    color: var(--accent);
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    cursor: pointer;
-    transition: background var(--transition);
-}
-
-.juez-confirm-btn:hover {
-    background: rgba(139,127,255,0.28);
-}
-
-/* ── Botón Twitch / Chat ── */
-.icon-twitch {
-    border: 1px solid rgba(145, 70, 255, 0.4);
-    border-radius: var(--radius-sm);
-    padding: 8px 16px;
-    color: #bf94ff;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    margin-left: auto;
-    background: rgba(145, 70, 255, 0.08);
-    transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    position: relative;
-    overflow: hidden;
-}
-
-.icon-twitch::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(145,70,255,0.1), transparent);
-    opacity: 0;
-    transition: opacity var(--transition);
-}
-
-.icon-twitch:hover {
-    background: rgba(145,70,255,0.18);
-    border-color: rgba(145,70,255,0.7);
-    box-shadow: 0 0 16px rgba(145,70,255,0.25);
-}
-
-.icon-twitch:hover::before {
-    opacity: 1;
-}
-
-.twitch-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #bf94ff;
-    animation: twitch-blink 2s ease-in-out infinite;
-}
-
-@keyframes twitch-blink {
-    0%, 100% { opacity: 1; }
-    50%       { opacity: 0.3; }
-}
-
-/* Puntuación media (nueva fila debajo del player) */
-.modal-score-row {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-}
-
-.score-label {
-    font-size: 0.6rem;
-    color: var(--text-3);
-    letter-spacing: 0.2em;
-}
-
-.score-value {
-    font-family: 'DM Mono', monospace;
-    font-size: 1.6rem;
-    font-weight: 500;
-    color: var(--gold);
-    text-shadow: 0 0 20px rgba(232,200,74,0.35);
-    line-height: 1;
-    transition: all 0.3s ease;
-}
-
-.score-value.updated {
-    animation: score-pop 0.4s var(--spring);
-}
-
-@keyframes score-pop {
-    0%   { transform: scale(1); }
-    50%  { transform: scale(1.18); color: #fff; }
-    100% { transform: scale(1); }
-}
-
-/* ─── BOTÓN CERRAR MODAL ───────────────────────────────── */
+.dot-jurado.voted { border-color: var(--gold); color: var(--gold); }
 
 .modal-close {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 50%;
-    color: var(--text-2);
-    cursor: pointer;
-    font-size: 0.75rem;
-    transition: background var(--transition), color var(--transition);
-    z-index: 10;
+    position: absolute; top: 15px; right: 15px;
+    background: none; border: none; color: var(--text-3);
+    font-size: 1.2rem; cursor: pointer;
 }
 
-.modal-close:hover {
-    background: rgba(255,255,255,0.12);
-    color: var(--text-1);
-}
-
-/* ─── SCROLLBAR ────────────────────────────────────────── */
-
+/* --- SCROLLBAR --- */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--deep); }
-::-webkit-scrollbar-thumb {
-    background: var(--accent-line);
-    border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(139,127,255,0.4);
-}
-
-/* ─── ANIMACIONES DE ENTRADA ───────────────────────────── */
+::-webkit-scrollbar-thumb { background: var(--accent-line); border-radius: 3px; }
 
 @keyframes card-in {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(15px); }
     to   { opacity: 1; transform: translateY(0); }
-}
-
-.card-equipo {
-    animation: card-in 0.4s ease both;
-}
-
-/* ─── RESPONSIVE ───────────────────────────────────────── */
-
-@media (max-width: 600px) {
-    .team-modal-card {
-        flex-direction: column;
-        padding: 20px;
-        gap: 20px;
-    }
-
-    .modal-img-container {
-        flex: none;
-        width: 120px;
-        align-self: center;
-    }
-
-    .modal-song-title {
-        font-size: 1.3rem;
-    }
-
-    .grid-equipos {
-        grid-template-columns: 1fr;
-        padding: 20px 16px;
-        gap: 10px;
-    }
-}
-/* --- ARREGLO PARA QUE LOS MONOS ESTÉN A LOS LADOS --- */
-.main-header {
-    position: relative;
-    padding: 52px 30px 40px;
-    border-bottom: 1px solid var(--accent-line);
-    
-    /* Añadimos esto para alinear los hijos en horizontal */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px; /* Espacio entre mono y título */
-}
-
-/* Ajuste para que el título no empuje a los monos hacia afuera */
-.titulo-principal {
-    margin: 0; 
-    text-align: center;
-}
-
-/* Estilo de los monos */
-.header-icon {
-    width: 80px;  /* Ajusta el tamaño aquí */
-    height: auto;
-    filter: drop-shadow(0 0 15px var(--accent-glow));
-    flex-shrink: 0; /* Evita que se aplasten */
 }
