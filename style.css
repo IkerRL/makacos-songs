@@ -1,3 +1,21 @@
+/* Hacemos que el nombre del artista en el modal parezca un botón */
+#zoom-user {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+#zoom-user:hover {
+    background: rgba(139, 127, 255, 0.15);
+    color: var(--text-1);
+}
+
+/* Estilo para cuando todavía es un misterio en el grid */
+.artista-equipo {
+    transition: color 0.3s ease;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Unbounded:wght@400;700;900&display=swap');
 
 @font-face {
