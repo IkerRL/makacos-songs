@@ -1,5 +1,5 @@
 // ════════════════════════════════════════════════════════════
-//  MAKACOS SONGS — script.js (Versión con Controles de Audio)
+//  MAKACOS SONGS — script.js (Versión Completa + Artista Oculto)
 // ════════════════════════════════════════════════════════════
 
 const TWITCH_CONFIG = {
@@ -51,9 +51,10 @@ const cancionesData = [
     { id: 30, titulo: "Canción Ejemplo 30", artista: "Artista 2", logo: "portada30.jpg", audio: "audio30.mp3" },
 ];
 
-// ESTADO
+// ─── ESTADO ───
 const votosJueces  = {};  
 const votosTwitch  = {};  
+const artistasRevelados = {}; // Controla qué artistas se han descubierto
 let audioActual        = new Audio();
 let twitchWS           = null;
 let twitchActivo       = false;
@@ -143,8 +144,17 @@ function renderizarGrid() {
     cancionesData.forEach(function(item, index) {
         var card = document.createElement('div');
         card.className = 'card-equipo';
+        
+        // Si ya fue revelada anteriormente, mantener visualmente
+        if (artistasRevelados[item.id]) {
+            card.classList.add('revealed'); 
+        }
+
         var media = calcularMedia(item.id);
         var scoreHTML = media !== null ? media : `<img src="${IMAGEN_PRE_VOTO}" class="score-placeholder-img">`;
+
+        // Mostrar nombre real o incógnita
+        var nombreArtista = artistasRevelados[item.id] ? item.artista : '???';
 
         card.innerHTML = `
             <span class="card-number">${(index + 1).toString().padStart(2, '0')}</span>
@@ -153,7 +163,7 @@ function renderizarGrid() {
                 <img src="${item.logo}" class="equipo-logo">
                 <div class="equipo-info">
                     <span class="nombre-equipo">${item.titulo}</span>
-                    <span class="artista-equipo">${item.artista}</span>
+                    <span class="artista-equipo">${nombreArtista}</span>
                 </div>
                 <span class="vol-text" id="grid-score-${item.id}">${scoreHTML}</span>
             </div>
@@ -175,7 +185,19 @@ function abrirZoom(datos) {
     cancionModalActual = datos.id;
     document.getElementById('zoom-img').src = datos.logo;
     document.getElementById('zoom-titulo').textContent = datos.titulo;
-    document.getElementById('zoom-user').textContent = datos.artista;
+    
+    // Configurar Artista con opción a revelar
+    const elUser = document.getElementById('zoom-user');
+    elUser.textContent = artistasRevelados[datos.id] ? datos.artista : '???';
+    elUser.style.cursor = 'pointer';
+    
+    elUser.onclick = function() {
+        if (!artistasRevelados[datos.id]) {
+            artistasRevelados[datos.id] = true;
+            elUser.textContent = datos.artista;
+            renderizarGrid(); // Actualiza el grid de fondo para que ya no ponga ???
+        }
+    };
     
     audioActual.src = datos.audio;
     audioActual.pause();
@@ -214,14 +236,15 @@ function renderJueces(cancionId) {
 
         var overlay = document.createElement('div');
         overlay.className = 'juez-input-overlay';
-        overlay.innerHTML = `<input type="number" step="0.1" min="0" max="10"><button>OK</button>`;
+        overlay.innerHTML = `<input type="number" step="0.1" min="0" max="10"><button class="juez-confirm-btn">OK</button>`;
         
         dot.ondblclick = function(e) {
             e.stopPropagation();
             overlay.classList.toggle('open');
         };
 
-        overlay.querySelector('button').onclick = function() {
+        overlay.querySelector('button').onclick = function(e) {
+            e.stopPropagation();
             var val = parseFloat(overlay.querySelector('input').value);
             if (!isNaN(val)) {
                 votosJueces[cancionId][juez.id] = val.toFixed(1);
@@ -257,9 +280,8 @@ function actualizarUIChat() {
     }
 }
 
-// ─── CONTROLES DE AUDIO (NUEVOS) ───
+// ─── CONTROLES DE AUDIO ───
 
-// Botón Play/Pausa
 document.getElementById('btn-play').onclick = function() {
     if (audioActual.paused) {
         audioActual.play();
@@ -270,31 +292,26 @@ document.getElementById('btn-play').onclick = function() {
     }
 };
 
-// Adelantar 10 segundos
 document.getElementById('btn-adelante').onclick = function() {
     audioActual.currentTime += 10;
 };
 
-// Retroceder 10 segundos
 document.getElementById('btn-atras').onclick = function() {
     audioActual.currentTime -= 10;
 };
 
-// Control de Volumen
 document.getElementById('volumen-slider').oninput = function() {
     audioActual.volume = this.value;
 };
 
-// CLICK EN LA BARRA PARA ADELANTAR/RECOGER (Seek)
 document.getElementById('barra-bg').onclick = function(e) {
     var rect = this.getBoundingClientRect();
-    var x = e.clientX - rect.left; // posición del click
+    var x = e.clientX - rect.left;
     var width = rect.width;
     var pct = x / width;
     audioActual.currentTime = pct * audioActual.duration;
 };
 
-// ACTUALIZACIÓN DE BARRA Y TEXTO
 audioActual.ontimeupdate = function() {
     if (audioActual.duration) {
         var pct = (audioActual.currentTime / audioActual.duration) * 100;
