@@ -20,9 +20,9 @@ const juecesConfig = [
 
 const cancionesData = [
     { id: 1, titulo: "YOUtopia", artista: "MakacoNinja", logo: "portada1.jpg", audio: "audio1.mp3" },
-    { id: 2, titulo: "Canción Ejemplo 2", artista: "Artista 2", logo: "portada2.jpg", audio: "audio2.mp3" },
-    { id: 3, titulo: "Canción Ejemplo 3", artista: "Artista 2", logo: "portada3.jpg", audio: "audio3.mp3" },
-    { id: 4, titulo: "Canción Ejemplo 4", artista: "Artista 2", logo: "portada4.jpg", audio: "audio4.mp3" },
+    { id: 2, titulo: "Choke Me", artista: "Eusebio", logo: "portada2.jpg", audio: "audio2.mp3" },
+    { id: 3, titulo: "Living Life,In The Night", artista: "Brroheenn", logo: "portada3.jpg", audio: "audio3.mp3" },
+    { id: 4, titulo: "Randy Ortom 2009", artista: "Jokker", logo: "portada4.jpg", audio: "audio4.mp3" },
     { id: 5, titulo: "Canción Ejemplo 5", artista: "Artista 2", logo: "portada5.jpg", audio: "audio5.mp3" },
     { id: 6, titulo: "Canción Ejemplo 6", artista: "Artista 1", logo: "portada6.jpg", audio: "audio6.mp3" },
     { id: 7, titulo: "Canción Ejemplo 7", artista: "Artista 2", logo: "portada7.jpg", audio: "audio7.mp3" },
