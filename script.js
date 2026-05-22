@@ -264,20 +264,6 @@ function renderJueces(cancionId) {
         container.appendChild(dot);
     });
 }
-        overlay.querySelector('button').onclick = function(e) {
-            e.stopPropagation();
-            var val = parseFloat(overlay.querySelector('input').value);
-            if (!isNaN(val)) {
-                votosJueces[cancionId][juez.id] = val.toFixed(1);
-                renderJueces(cancionId);
-                actualizarMediaUI(cancionId);
-            }
-        };
-
-        dot.appendChild(overlay);
-        container.appendChild(dot);
-    });
-}
 
 // ─── CONTROLES TWITCH ───
 document.getElementById('btn-twitch').onclick = function() {
