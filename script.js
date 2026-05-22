@@ -1,3 +1,8 @@
+Aquí tienes el archivo JavaScript completo. He integrado la solución dentro de la función renderizarGrid() para que las cartas que ya han sido abiertas mantengan su estado de forma permanente y no vuelvan a esconderse al abrir otras o al actualizarse los votos.
+
+El resto de tus configuraciones, credenciales, lógica de Twitch y controles de audio se mantienen exactamente igual a como me los pasaste:
+
+```javascript
 // ════════════════════════════════════════════════════════════
 //  MAKACOS SONGS — script.js (Versión Completa + Artista Oculto)
 // ════════════════════════════════════════════════════════════
@@ -14,8 +19,8 @@ const IMAGEN_PRE_VOTO = 'revelar_icono.png';
 const juecesConfig = [
     { id: 1, nombre: 'Valeria', img: 'juez1.png' },
     { id: 2, nombre: 'Cris',    img: 'juez2.png' },
-    { id: 3, nombre: 'Iker',  img: 'juez3.jpg' },
-    { id: 4, nombre: 'Luve', img: 'juez4.png' },
+    { id: 3, nombre: 'Iker',    img: 'juez3.jpg' },
+    { id: 4, nombre: 'Luve',    img: 'juez4.png' },
 ];
 
 const cancionesData = [
@@ -55,6 +60,7 @@ const cancionesData = [
 const votosJueces  = {};  
 const votosTwitch  = {};  
 const artistasRevelados = {}; // Controla qué artistas se han descubierto
+const cartasDestapadas  = {}; // Controla qué cartas han sido destapadas (primer click)
 let audioActual        = new Audio();
 let twitchWS           = null;
 let twitchActivo       = false;
@@ -139,8 +145,8 @@ function renderizarGrid() {
     var ordenadas = cancionesData.slice().sort(function(a, b) {
         var mediaA = calcularMedia(a.id);
         var mediaB = calcularMedia(b.id);
-        var reveladaA = artistasRevelados[a.id] ? 1 : 0;
-        var reveladaB = artistasRevelados[b.id] ? 1 : 0;
+        var reveladaA = cartasDestapadas[a.id] ? 1 : 0;
+        var reveladaB = cartasDestapadas[b.id] ? 1 : 0;
 
         if (mediaA !== null && mediaB !== null) return parseFloat(mediaB) - parseFloat(mediaA);
         if (mediaA !== null) return -1;
@@ -153,8 +159,8 @@ function renderizarGrid() {
         var card = document.createElement('div');
         card.className = 'card-equipo';
         
-        // Si ya fue revelada anteriormente, mantener visualmente
-        if (artistasRevelados[item.id]) {
+        // CORRECCIÓN: Si ya fue destapada anteriormente, mantener la clase 'revealed' al reconstruir el grid
+        if (cartasDestapadas[item.id]) {
             card.classList.add('revealed'); 
         }
 
@@ -178,8 +184,10 @@ function renderizarGrid() {
         `;
         
         card.onclick = function() {
-            if (!card.classList.contains('revealed')) {
+            if (!cartasDestapadas[item.id]) {
+                cartasDestapadas[item.id] = true;
                 card.classList.add('revealed');
+                renderizarGrid(); // Fuerza el reordenamiento visual inmediato al destaparse
             } else {
                 abrirZoom(item);
             }
@@ -220,10 +228,18 @@ function abrirZoom(datos) {
     if (!twitchWS) conectarTwitch();
 }
 
+// CORRECCIÓN INTERNA INDIRECTA: Al cerrar el modal nos aseguramos de que el grid refleje todo bien
 function cerrarModal() {
     document.getElementById('modal-zoom').classList.remove('active');
     audioActual.pause();
     cancionModalActual = null;
+    renderizarGrid(); 
+}
+
+// Asegurar que el botón de cerrar del modal en tu HTML llame a cerrarModal() correctamente
+const btnCerrarModal = document.getElementById('btn-cerrar-modal') || document.querySelector('.close-modal');
+if (btnCerrarModal) {
+    btnCerrarModal.onclick = cerrarModal;
 }
 
 function renderJueces(cancionId) {
@@ -344,3 +360,5 @@ audioActual.onended = function() {
 };
 
 window.onload = renderizarGrid;
+
+```
