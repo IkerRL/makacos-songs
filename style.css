@@ -899,3 +899,22 @@ body {
     filter: drop-shadow(0 0 15px var(--accent-glow));
     flex-shrink: 0; /* Evita que se aplasten */
 }
+.juez-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+.juez-fallback {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #222;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #e8c84a;
+}
