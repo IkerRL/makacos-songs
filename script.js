@@ -1,8 +1,4 @@
-Aquí tienes el archivo JavaScript completo. He integrado la solución dentro de la función renderizarGrid() para que las cartas que ya han sido abiertas mantengan su estado de forma permanente y no vuelvan a esconderse al abrir otras o al actualizarse los votos.
 
-El resto de tus configuraciones, credenciales, lógica de Twitch y controles de audio se mantienen exactamente igual a como me los pasaste:
-
-```javascript
 // ════════════════════════════════════════════════════════════
 //  MAKACOS SONGS — script.js (Versión Completa + Artista Oculto)
 // ════════════════════════════════════════════════════════════
