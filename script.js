@@ -227,22 +227,43 @@ function renderJueces(cancionId) {
         var nota = votosJueces[cancionId][juez.id];
         var dot = document.createElement('div');
         dot.className = 'dot-jurado' + (nota ? ' voted' : '');
-        
+
         if (nota) {
-            dot.innerHTML = `<span class="juez-score">${nota}</span><span class="juez-label">J${juez.id}</span>`;
+            dot.innerHTML = `
+                <img src="${juez.img}" class="juez-avatar" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <span class="juez-fallback" style="display:none">J${juez.id}</span>
+                <span class="juez-score">${nota}</span>
+            `;
         } else {
-            dot.innerHTML = `<span class="juez-num">J${juez.id}</span>`;
+            dot.innerHTML = `
+                <img src="${juez.img}" class="juez-avatar" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <span class="juez-fallback" style="display:none">J${juez.id}</span>
+            `;
         }
 
         var overlay = document.createElement('div');
         overlay.className = 'juez-input-overlay';
         overlay.innerHTML = `<input type="number" step="0.1" min="0" max="10"><button class="juez-confirm-btn">OK</button>`;
-        
+
         dot.ondblclick = function(e) {
             e.stopPropagation();
             overlay.classList.toggle('open');
         };
 
+        overlay.querySelector('button').onclick = function(e) {
+            e.stopPropagation();
+            var val = parseFloat(overlay.querySelector('input').value);
+            if (!isNaN(val)) {
+                votosJueces[cancionId][juez.id] = val.toFixed(1);
+                renderJueces(cancionId);
+                actualizarMediaUI(cancionId);
+            }
+        };
+
+        dot.appendChild(overlay);
+        container.appendChild(dot);
+    });
+}
         overlay.querySelector('button').onclick = function(e) {
             e.stopPropagation();
             var val = parseFloat(overlay.querySelector('input').value);
