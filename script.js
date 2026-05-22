@@ -1,4 +1,3 @@
-
 // ════════════════════════════════════════════════════════════
 //  MAKACOS SONGS — script.js (Versión Completa + Artista Oculto)
 // ════════════════════════════════════════════════════════════
@@ -15,8 +14,8 @@ const IMAGEN_PRE_VOTO = 'revelar_icono.png';
 const juecesConfig = [
     { id: 1, nombre: 'Valeria', img: 'juez1.png' },
     { id: 2, nombre: 'Cris',    img: 'juez2.png' },
-    { id: 3, nombre: 'Iker',    img: 'juez3.jpg' },
-    { id: 4, nombre: 'Luve',    img: 'juez4.png' },
+    { id: 3, nombre: 'Iker',  img: 'juez3.jpg' },
+    { id: 4, nombre: 'Luve', img: 'juez4.png' },
 ];
 
 const cancionesData = [
@@ -56,7 +55,6 @@ const cancionesData = [
 const votosJueces  = {};  
 const votosTwitch  = {};  
 const artistasRevelados = {}; // Controla qué artistas se han descubierto
-const cartasDestapadas  = {}; // Controla qué cartas han sido destapadas (primer click)
 let audioActual        = new Audio();
 let twitchWS           = null;
 let twitchActivo       = false;
@@ -129,34 +127,26 @@ function actualizarMediaUI(cancionId) {
     var elModal = document.getElementById('score-media');
     if (elModal) elModal.textContent = media !== null ? media : '—';
 
-    renderizarGrid();
+    var elGrid = document.getElementById('grid-score-' + cancionId);
+    if (elGrid) {
+        if (media !== null) {
+            elGrid.innerHTML = media;
+        } else {
+            elGrid.innerHTML = `<img src="${IMAGEN_PRE_VOTO}" class="score-placeholder-img">`;
+        }
+    }
 }
 
 // ─── GRID ───
 function renderizarGrid() {
     var grid = document.getElementById('grid-canciones');
     grid.innerHTML = '';
-
-    // Ordenar: con puntuación de mayor a menor, luego destapadas sin nota, luego sin destapar
-    var ordenadas = cancionesData.slice().sort(function(a, b) {
-        var mediaA = calcularMedia(a.id);
-        var mediaB = calcularMedia(b.id);
-        var reveladaA = cartasDestapadas[a.id] ? 1 : 0;
-        var reveladaB = cartasDestapadas[b.id] ? 1 : 0;
-
-        if (mediaA !== null && mediaB !== null) return parseFloat(mediaB) - parseFloat(mediaA);
-        if (mediaA !== null) return -1;
-        if (mediaB !== null) return 1;
-        if (reveladaA !== reveladaB) return reveladaB - reveladaA;
-        return a.id - b.id;
-    });
-
-    ordenadas.forEach(function(item, index) {
+    cancionesData.forEach(function(item, index) {
         var card = document.createElement('div');
         card.className = 'card-equipo';
         
-        // CORRECCIÓN: Si ya fue destapada anteriormente, mantener la clase 'revealed' al reconstruir el grid
-        if (cartasDestapadas[item.id]) {
+        // Si ya fue revelada anteriormente, mantener visualmente
+        if (artistasRevelados[item.id]) {
             card.classList.add('revealed'); 
         }
 
@@ -180,10 +170,8 @@ function renderizarGrid() {
         `;
         
         card.onclick = function() {
-            if (!cartasDestapadas[item.id]) {
-                cartasDestapadas[item.id] = true;
+            if (!card.classList.contains('revealed')) {
                 card.classList.add('revealed');
-                renderizarGrid(); // Fuerza el reordenamiento visual inmediato al destaparse
             } else {
                 abrirZoom(item);
             }
@@ -224,18 +212,10 @@ function abrirZoom(datos) {
     if (!twitchWS) conectarTwitch();
 }
 
-// CORRECCIÓN INTERNA INDIRECTA: Al cerrar el modal nos aseguramos de que el grid refleje todo bien
 function cerrarModal() {
     document.getElementById('modal-zoom').classList.remove('active');
     audioActual.pause();
     cancionModalActual = null;
-    renderizarGrid(); 
-}
-
-// Asegurar que el botón de cerrar del modal en tu HTML llame a cerrarModal() correctamente
-const btnCerrarModal = document.getElementById('btn-cerrar-modal') || document.querySelector('.close-modal');
-if (btnCerrarModal) {
-    btnCerrarModal.onclick = cerrarModal;
 }
 
 function renderJueces(cancionId) {
@@ -356,5 +336,3 @@ audioActual.onended = function() {
 };
 
 window.onload = renderizarGrid;
-
-```
