@@ -127,21 +127,29 @@ function actualizarMediaUI(cancionId) {
     var elModal = document.getElementById('score-media');
     if (elModal) elModal.textContent = media !== null ? media : '—';
 
-    var elGrid = document.getElementById('grid-score-' + cancionId);
-    if (elGrid) {
-        if (media !== null) {
-            elGrid.innerHTML = media;
-        } else {
-            elGrid.innerHTML = `<img src="${IMAGEN_PRE_VOTO}" class="score-placeholder-img">`;
-        }
-    }
+    renderizarGrid();
 }
 
 // ─── GRID ───
 function renderizarGrid() {
     var grid = document.getElementById('grid-canciones');
     grid.innerHTML = '';
-    cancionesData.forEach(function(item, index) {
+
+    // Ordenar: con puntuación de mayor a menor, luego destapadas sin nota, luego sin destapar
+    var ordenadas = cancionesData.slice().sort(function(a, b) {
+        var mediaA = calcularMedia(a.id);
+        var mediaB = calcularMedia(b.id);
+        var reveladaA = artistasRevelados[a.id] ? 1 : 0;
+        var reveladaB = artistasRevelados[b.id] ? 1 : 0;
+
+        if (mediaA !== null && mediaB !== null) return parseFloat(mediaB) - parseFloat(mediaA);
+        if (mediaA !== null) return -1;
+        if (mediaB !== null) return 1;
+        if (reveladaA !== reveladaB) return reveladaB - reveladaA;
+        return a.id - b.id;
+    });
+
+    ordenadas.forEach(function(item, index) {
         var card = document.createElement('div');
         card.className = 'card-equipo';
         
