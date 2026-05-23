@@ -44,11 +44,6 @@ const cancionesData = [
     { id: 23, titulo: "Me como otro Perco", artista: "Maxito", logo: "portada23.jpg", audio: "audio23.mp3" },
     { id: 24, titulo: "Mis Tías", artista: "Sonia", logo: "portada24.jpg", audio: "audio24.mp3" },
     { id: 25, titulo: "Rocky", artista: "Luumika", logo: "portada25.jpg", audio: "audio25.mp3" },
-    { id: 26, titulo: "Canción Ejemplo 26", artista: "Artista 1", logo: "portada26.jpg", audio: "audio26.mp3" },
-    { id: 27, titulo: "Canción Ejemplo 27", artista: "Artista 2", logo: "portada27.jpg", audio: "audio27.mp3" },
-    { id: 28, titulo: "Canción Ejemplo 28", artista: "Artista 2", logo: "portada28.jpg", audio: "audio28.mp3" },
-    { id: 29, titulo: "Canción Ejemplo 29", artista: "Artista 2", logo: "portada29.jpg", audio: "audio29.mp3" },
-    { id: 30, titulo: "Canción Ejemplo 30", artista: "Artista 2", logo: "portada30.jpg", audio: "audio30.mp3" },
 ];
 
 // ─── ESTADO ───
