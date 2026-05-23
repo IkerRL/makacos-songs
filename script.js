@@ -104,17 +104,39 @@ function conectarTwitch() {
 
 // ─── LÓGICA DE MEDIA ───
 function calcularMedia(cancionId) {
-    var notas = [];
+    // — Jurado —
+    var notasJueces = [];
     if (votosJueces[cancionId]) {
-        for (var jId in votosJueces[cancionId]) { notas.push(parseFloat(votosJueces[cancionId][jId])); }
+        for (var jId in votosJueces[cancionId]) {
+            notasJueces.push(parseFloat(votosJueces[cancionId][jId]));
+        }
     }
+
+    // — Chat —
+    var notasChat = [];
     if (votosTwitch[cancionId]) {
-        for (var user in votosTwitch[cancionId]) { notas.push(votosTwitch[cancionId][user]); }
+        for (var user in votosTwitch[cancionId]) {
+            notasChat.push(votosTwitch[cancionId][user]);
+        }
     }
-    if (notas.length === 0) return null;
-    var suma = 0;
-    for (var i = 0; i < notas.length; i++) { suma += notas[i]; }
-    return (suma / notas.length).toFixed(2);
+
+    // — Casos sin votos —
+    if (notasJueces.length === 0 && notasChat.length === 0) return null;
+
+    var mediaJueces = notasJueces.length > 0
+        ? notasJueces.reduce((a, b) => a + b, 0) / notasJueces.length
+        : 0;
+
+    var mediaChat = notasChat.length > 0
+        ? notasChat.reduce((a, b) => a + b, 0) / notasChat.length
+        : 0;
+
+    // — Si solo hay votos de uno de los dos, usa ese al 100% —
+    if (notasJueces.length === 0) return mediaChat.toFixed(2);
+    if (notasChat.length    === 0) return mediaJueces.toFixed(2);
+
+    // — 70% jurado + 30% chat —
+    return (mediaJueces * 0.7 + mediaChat * 0.3).toFixed(2);
 }
 
 function actualizarMediaUI(cancionId) {
