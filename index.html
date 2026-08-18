@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maka Songs - Omen Edition</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <div class="omen-bg"></div>
-    <div class="bg-energy-core"></div>
     <div class="noise-overlay"></div>
+    <div class="omen-bg">
+        <div class="bg-energy-core"></div>
+        <div class="vignette"></div>
+    </div>
 
     <header class="main-header">
-        <h1 class="titulo-principal" data-subtitle="MAKACAGOTICA">PRIMATES SONGS</h1>
+        <h1 class="titulo-principal" data-subtitle="SUMMER EDITION">PRIMATES SONGS </h1>
     </header>
 
     <main class="grid-equipos" id="grid-canciones"></main>
@@ -22,58 +27,89 @@
     <div class="team-modal" id="modal-zoom" onclick="cerrarModal()">
         <div class="team-modal-card" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="cerrarModal()">✕</button>
-            
-            <div class="modal-img-container">
-                <img src="" id="zoom-img" alt="Portada">
-            </div>
 
-            <div class="modal-info-side">
-                <div class="modal-user-row">
-                    <span>👤</span>
-                    <span id="zoom-user">Usuario</span>
+            <div class="modal-main-content">
+
+                <div class="modal-header-info">
+                    <h2 class="modal-song-title" id="zoom-titulo">Nombre de la Canción</h2>
+                    <h3 class="modal-song-artist" id="zoom-artista">Artista Real</h3>
+                    <div class="modal-user-row">
+                        <span>👤 Compartido por:</span>
+                        <span id="zoom-user">Usuario</span>
+                    </div>
                 </div>
-                
-                <h2 class="modal-song-title" id="zoom-titulo">Nombre de la Canción</h2>
-                
+
+                <div class="modal-video-container">
+                    <video id="videoActual" preload="metadata" playsinline></video>
+                </div>
+
                 <!-- REPRODUCTOR PRO -->
                 <div class="modal-player">
                     <div class="player-controls">
-                        <button class="audio-icon-btn" id="btn-atras">
-                            <svg viewBox="0 0 24 24"><path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z"/></svg>
+                        <button class="play-btn" id="btn-atras">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                <path d="M11 18V6l-8.5 6 8.5 6zm.5-6l8.5 6V6l-8.5 6z" />
+                            </svg>
                         </button>
-                        
-                        <button class="audio-icon-btn main-play" id="btn-play">▶</button>
-                        
-                        <button class="audio-icon-btn" id="btn-adelante">
-                            <svg viewBox="0 0 24 24"><path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z"/></svg>
+
+                        <button class="play-btn main-play" id="btn-play">
+                            <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </button>
+
+                        <button class="play-btn" id="btn-adelante">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                <path d="M4 18l8.5-6L4 6v12zm9-12v12l8.5-6L13 6z" />
+                            </svg>
                         </button>
                     </div>
 
                     <div class="player-timeline">
+                        <span class="player-time time-current" id="tiempo-actual">0:00</span>
                         <div class="player-bar-bg" id="barra-bg">
-                            <div class="player-bar-fill" id="barra-fill"></div>
+                            <div class="player-bar-fill" id="barra-fill">
+                                <div class="player-bar-thumb"></div>
+                            </div>
                         </div>
-                        <span class="player-time" id="tiempo-texto">0:00 / 0:00</span>
+                        <span class="player-time time-total" id="tiempo-total">0:00</span>
                     </div>
 
                     <div class="volume-control">
-                        <span class="vol-icon">🔊</span>
+                        <span class="vol-icon">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                <path
+                                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+                            </svg>
+                        </span>
                         <input type="range" id="volumen-slider" min="0" max="1" step="0.05" value="1">
                     </div>
                 </div>
+            </div>
 
-                <div class="modal-score-row">
-                    <span class="score-label">MEDIA</span>
+            <div class="modal-side-content">
+                <!-- 1. Puntuación Media -->
+                <div class="modal-score-box">
+                    <span class="score-label">PUNTUACIÓN MEDIA</span>
                     <span class="score-value" id="score-media">—</span>
                 </div>
 
-                <div class="modal-icons-row">
-                    <div class="jurado-placeholder" id="jurado-row"></div>
-                    <div class="icon-twitch" id="btn-twitch">
+                <!-- 2. Chat de Twitch -->
+                <div class="twitch-section">
+                    <button class="icon-twitch" id="btn-twitch">
                         <span class="twitch-dot"></span>
-                        <span class="twitch-label">CHAT</span>
+                        <span class="twitch-label">CONECTAR CHAT</span>
                         <span class="twitch-count"></span>
+                    </button>
+                    <div class="twitch-votes-list" id="twitch-votes-list">
+                        <div class="twitch-empty-msg">Esperando conexión...</div>
                     </div>
+                </div>
+
+                <!-- 3. Jurado -->
+                <div class="jurado-section">
+                    <span class="score-label">VOTO JURADO</span>
+                    <div class="jurado-placeholder" id="jurado-row"></div>
                 </div>
             </div>
         </div>
@@ -81,4 +117,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

@@ -3,57 +3,144 @@
 // ════════════════════════════════════════════════════════════
 
 const TWITCH_CONFIG = {
-    canal:  'makacagotica',       
-    token:  'oauth:hhqcdtugdwdw2ivhnhaio6jr5zy29g', 
-    nick:   'makacagotica',       
-    comando: '!voto',               
+    canal: 'makacagotica',
+    token: 'oauth:hhqcdtugdwdw2ivhnhaio6jr5zy29g',
+    nick: 'makacagotica',
+    comando: '!voto',
 };
 
-const IMAGEN_PRE_VOTO = 'revelar_icono.png'; 
+const IMAGEN_PRE_VOTO = 'revelar_icono.png';
 
 const juecesConfig = [
-    { id: 1, nombre: 'Valeria', img: 'juez1.png' },
-    { id: 2, nombre: 'Cris',    img: 'juez2.png' },
-    { id: 3, nombre: 'Iker',  img: 'juez3.png' },
-    { id: 4, nombre: 'Luve', img: 'juez4.png' },
+    { id: 1, nombre: 'Iker',   img: 'juez1.png' },
+    { id: 2, nombre: 'Valeria', img: 'juez2.png' },
+    { id: 3, nombre: 'Michi',  img: 'juez3.png' },
+    { id: 4, nombre: 'Luve',   img: 'juez4.png' },
 ];
 
 const cancionesData = [
-    { id: 1, titulo: "YOUtopia", artista: "MakacoNinja", logo: "portada1.jpg", audio: "audio1.mp3" },
-    { id: 2, titulo: "Choke Me", artista: "Eusebio", logo: "portada2.jpg", audio: "audio2.mp3" },
-    { id: 3, titulo: "Living Life,In The Night", artista: "Brroheenn", logo: "portada3.jpg", audio: "audio3.mp3" },
-    { id: 4, titulo: "D0BLE0 - Princesa de Jade", artista: "Jokker", logo: "portada4.jpg", audio: "audio4.mp3" },
-    { id: 5, titulo: "Rema", artista: "MasterKira", logo: "portada5.jpg", audio: "audio5.mp3" },
-    { id: 6, titulo: "Nintendogs", artista: "Kipos", logo: "portada6.jpg", audio: "audio6.mp3" },
-    { id: 7, titulo: "Soy tu Primavera", artista: "0Fusil0", logo: "portada7.jpg", audio: "audio7.mp3" },
-    { id: 8, titulo: "The Call", artista: "Hachiko", logo: "portada8.jpg", audio: "audio8.mp3" },
-    { id: 9, titulo: "Veneno", artista: "Marru", logo: "portada9.jpg", audio: "audio9.mp3" },
-    { id: 10, titulo: "Sudores fríos", artista: "Michi", logo: "portada10.jpg", audio: "audio10.mp3" },
-    { id: 11, titulo: "Kany García - De Bien a Mal", artista: "Alice", logo: "portada11.jpg", audio: "audio11.mp3" },
-    { id: 12, titulo: "En Otra Vida", artista: "M3cha_dorado", logo: "portada12.jpg", audio: "audio12.mp3" },
-    { id: 13, titulo: "La Salvación", artista: "Luvety", logo: "portada13.jpg", audio: "audio13.mp3" },
-    { id: 14, titulo: "Busco un centro de gracedad permanente", artista: "Bru", logo: "portada14.jpg", audio: "audio14.mp3" },
-    { id: 15, titulo: "Sense Tu", artista: "Iker_RL", logo: "portada15.jpg", audio: "audio15.mp3" },
-    { id: 16, titulo: "Paranoia", artista: "Valeria", logo: "portada16.jpg", audio: "audio16.mp3" },
-    { id: 17, titulo: "Just a Boy", artista: "Diosadelkaos", logo: "portada17.jpg", audio: "audio17.mp3" },
-    { id: 18, titulo: "Me dijeron que te vieron drogada en Brasil", artista: "Papalote", logo: "portada18.jpg", audio: "audio18.mp3" },
-    { id: 19, titulo: "Dancing in the Moonlight", artista: "Crispy", logo: "portada19.jpg", audio: "audio19.mp3" },
-    { id: 20, titulo: "El Patito Juan", artista: "Lauliet", logo: "portada20.jpg", audio: "audio20.mp3" },
-    { id: 21, titulo: "See U in Hell", artista: "MakacoIsla", logo: "portada21.jpg", audio: "audio21.mp3" },
-    { id: 22, titulo: "Carta a tu Ansiedad", artista: "Marruu", logo: "portada22.jpg", audio: "audio22.mp3" },
-    { id: 23, titulo: "Me como otro Perco", artista: "Maxito", logo: "portada23.jpg", audio: "audio23.mp3" },
-    { id: 24, titulo: "Mis Tías", artista: "Sonia", logo: "portada24.jpg", audio: "audio24.mp3" },
-    { id: 25, titulo: "Rocky", artista: "Luumika", logo: "portada25.jpg", audio: "audio25.mp3" },
+    {
+        id: 1,
+        titulo: "The Hills",
+        artista: "Rachel Chinouriri",
+        compartidoPor: "Eusebio",
+        video: "videos/eusebio.mp4" // YouTube: https://youtu.be/G5lKmUw_Vxs
+    },
+    {
+        id: 2,
+        titulo: "Life is a Highway",
+        artista: "Rascal Flatts",
+        compartidoPor: "Hachiko",
+        video: "videos/life_is_a_highway.mp4" // YouTube: https://www.youtube.com/watch?v=Zh-ZUrc-aLI
+    },
+    {
+        id: 3,
+        titulo: "Verano en la ciudad",
+        artista: "Joaquina",
+        compartidoPor: "RisaHerz",
+        video: "videos/verano_en_la_ciudad.mp4"
+    },
+    {
+        id: 4,
+        titulo: "Heroine",
+        artista: "Maroon 5",
+        compartidoPor: "MasterKira",
+        video: "videos/masterkira.mp4"
+    },
+    {
+        id: 5,
+        titulo: "La Bicicleta",
+        artista: "Carlos Vives, Shakira",
+        compartidoPor: "Makaco Entrenador",
+        video: "videos/makaco_entrenador.mp4"
+    },
+    {
+        id: 6,
+        titulo: "Canción de Cabecera",
+        artista: "Phineas y Ferb",
+        compartidoPor: "MakaQuillo",
+        video: "videos/makaquillo.mp4"
+    },
+    {
+        id: 7,
+        titulo: "QUE PRETENDES",
+        artista: "J Balvin, Bad Bunny",
+        compartidoPor: "Brrokeenn",
+        video: "videos/brrokeenn.mp4"
+    },
+    {
+        id: 8,
+        titulo: "Firework",
+        artista: "Katy Perry",
+        compartidoPor: "Luvetyy",
+        video: "videos/luvetyy.mp4"
+    },
+    {
+        id: 9,
+        titulo: "Cuando en marcha voy (La canción de la carretera)",
+        artista: "Bob Esponja",
+        compartidoPor: "Marru",
+        video: "videos/marru.mp4"
+    },
+    {
+        id: 10,
+        titulo: "ALGO VA A PASAR",
+        artista: "Quevedo ft. La Pantera",
+        compartidoPor: "Michi",
+        video: "videos/michi.mp4"
+    },
+    {
+        id: 11,
+        titulo: "Balada",
+        artista: "Gusttavo Lima",
+        compartidoPor: "Jokker",
+        video: "videos/jokker.mp4"
+    },
+    {
+        id: 12,
+        titulo: "Fiesta Pagana",
+        artista: "Mägo de Oz",
+        compartidoPor: "Ikeer_RL",
+        video: "videos/ikeer_rl.mp4"
+    },
+    {
+        id: 13,
+        titulo: "No Te Da",
+        artista: "8BELIAL",
+        compartidoPor: "Babuino Subentendedor",
+        video: "videos/babuino.mp4" // YouTube: https://youtu.be/6M-wCGvbGNc
+    },
+    {
+        id: 14,
+        titulo: "Dancing Queen",
+        artista: "ABBA (Mamma Mia! 2008)",
+        compartidoPor: "Bru",
+        video: "videos/bru.mp4" // YouTube: https://youtu.be/QRoWiTcO7dk
+    },
+    {
+        id: 15,
+        titulo: "Caprichoso",
+        artista: "Quevedo",
+        compartidoPor: "ner_pm",
+        video: "videos/ner_pm.mp4" // YouTube: https://youtu.be/0_AO2vmNVng
+    },
+    {
+        id: 16,
+        titulo: "The Nights",
+        artista: "Avicii",
+        compartidoPor: "Valeria",
+        video: "videos/valeria.mp4" // YouTube: https://youtu.be/UtF6Jej8yb4
+    }
 ];
 
 // ─── ESTADO ───
-const votosJueces  = {};  
-const votosTwitch  = {};  
-const artistasRevelados = {}; // Controla qué artistas se han descubierto
-let audioActual        = new Audio();
-let twitchWS           = null;
-let twitchActivo       = false;
+const votosJueces = {};
+const votosTwitch = {};
+const usuariosRevelados = {}; // Controla qué usuarios (quienes compartieron) se han descubierto
+let twitchWS = null;
+let twitchActivo = false;
 let cancionModalActual = null;
+let videoActual; // Se inicializará en onload
 
 // ─── FUNCIÓN AUXILIAR PARA TIEMPO ───
 function formatearTiempo(segundos) {
@@ -68,22 +155,22 @@ function conectarTwitch() {
     if (twitchWS) return;
     twitchWS = new WebSocket('wss://irc-ws.chat.twitch.tv:443');
 
-    twitchWS.onopen = function() {
+    twitchWS.onopen = function () {
         twitchWS.send('PASS ' + TWITCH_CONFIG.token);
         twitchWS.send('NICK ' + TWITCH_CONFIG.nick);
         twitchWS.send('JOIN #' + TWITCH_CONFIG.canal);
         console.log("Chat de Twitch Conectado");
     };
 
-    twitchWS.onmessage = function(event) {
+    twitchWS.onmessage = function (event) {
         var line = event.data;
         if (line.includes('PING')) { twitchWS.send('PONG :tmi.twitch.tv'); }
-        
+
         var match = line.match(/:(\w+)!\w+@\w+\.tmi\.twitch\.tv PRIVMSG #\w+ :(.+)/);
         if (match) {
             var usuario = match[1].toLowerCase();
             var mensaje = match[2].trim();
-            
+
             var re = new RegExp('^' + TWITCH_CONFIG.comando + '\\s+([0-9]+(?:[.,][0-9]+)?)$', 'i');
             var votoMatch = mensaje.match(re);
 
@@ -93,7 +180,7 @@ function conectarTwitch() {
                     var id = cancionModalActual;
                     if (!votosTwitch[id]) votosTwitch[id] = {};
                     votosTwitch[id][usuario] = nota;
-                    
+
                     actualizarMediaUI(id);
                     actualizarUIChat();
                 }
@@ -133,7 +220,7 @@ function calcularMedia(cancionId) {
 
     // — Si solo hay votos de uno de los dos, usa ese al 100% —
     if (notasJueces.length === 0) return mediaChat.toFixed(2);
-    if (notasChat.length    === 0) return mediaJueces.toFixed(2);
+    if (notasChat.length === 0) return mediaJueces.toFixed(2);
 
     // — 70% jurado + 30% chat —
     return (mediaJueces * 0.7 + mediaChat * 0.3).toFixed(2);
@@ -158,35 +245,39 @@ function actualizarMediaUI(cancionId) {
 function renderizarGrid() {
     var grid = document.getElementById('grid-canciones');
     grid.innerHTML = '';
-    cancionesData.forEach(function(item, index) {
+    cancionesData.forEach(function (item, index) {
         var card = document.createElement('div');
         card.className = 'card-equipo';
-        
-        // Si ya fue revelada anteriormente, mantener visualmente
-        if (artistasRevelados[item.id]) {
-            card.classList.add('revealed'); 
+
+        // Si el usuario ya fue revelado anteriormente, mantener visualmente
+        if (usuariosRevelados[item.id]) {
+            card.classList.add('revealed');
         }
 
         var media = calcularMedia(item.id);
         var scoreHTML = media !== null ? media : `<img src="${IMAGEN_PRE_VOTO}" class="score-placeholder-img">`;
 
-        // Mostrar nombre real o incógnita
-        var nombreArtista = artistasRevelados[item.id] ? item.artista : '???';
+        // Mostrar nombre del usuario que comparte o incógnita
+        var nombreUsuario = usuariosRevelados[item.id] ? item.compartidoPor : '???';
+
+        // En video no hay logo fijo por defecto, se puede usar un placeholder genérico
+        var logoSrc = item.logo ? item.logo : 'revelar_icono.png';
 
         card.innerHTML = `
             <span class="card-number">${(index + 1).toString().padStart(2, '0')}</span>
             <div class="smoke-cover"></div>
             <div class="equipo-content">
-                <img src="${item.logo}" class="equipo-logo">
+                <img src="${logoSrc}" class="equipo-logo">
                 <div class="equipo-info">
                     <span class="nombre-equipo">${item.titulo}</span>
-                    <span class="artista-equipo">${nombreArtista}</span>
+                    <span class="artista-equipo">${item.artista}</span>
+                    <span class="usuario-equipo" style="font-size:0.65rem; color:var(--omen-purple);">👤 ${nombreUsuario}</span>
                 </div>
                 <span class="vol-text" id="grid-score-${item.id}">${scoreHTML}</span>
             </div>
         `;
-        
-        card.onclick = function() {
+
+        card.onclick = function () {
             if (!card.classList.contains('revealed')) {
                 card.classList.add('revealed');
             } else {
@@ -200,27 +291,34 @@ function renderizarGrid() {
 // ─── MODAL Y JUECES ───
 function abrirZoom(datos) {
     cancionModalActual = datos.id;
-    document.getElementById('zoom-img').src = datos.logo;
+
     document.getElementById('zoom-titulo').textContent = datos.titulo;
-    
-    // Configurar Artista con opción a revelar
+    document.getElementById('zoom-artista').textContent = datos.artista;
+
+    // Configurar Usuario con opción a revelar
     const elUser = document.getElementById('zoom-user');
-    elUser.textContent = artistasRevelados[datos.id] ? datos.artista : '???';
+    elUser.textContent = usuariosRevelados[datos.id] ? datos.compartidoPor : '???';
     elUser.style.cursor = 'pointer';
-    
-    elUser.onclick = function() {
-        if (!artistasRevelados[datos.id]) {
-            artistasRevelados[datos.id] = true;
-            elUser.textContent = datos.artista;
+
+    elUser.onclick = function () {
+        if (!usuariosRevelados[datos.id]) {
+            usuariosRevelados[datos.id] = true;
+            elUser.textContent = datos.compartidoPor;
             renderizarGrid(); // Actualiza el grid de fondo para que ya no ponga ???
         }
     };
-    
-    audioActual.src = datos.audio;
-    audioActual.pause();
+
+    if (datos.video) {
+        videoActual.src = datos.video;
+    } else {
+        videoActual.removeAttribute('src'); // Si no hay video, limpiar
+    }
+
+    videoActual.pause();
     document.getElementById('barra-fill').style.width = '0%';
-    document.getElementById('btn-play').textContent = '▶';
-    document.getElementById('tiempo-texto').textContent = "0:00 / 0:00";
+    document.getElementById('btn-play').innerHTML = '<svg class="play-icon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M8 5v14l11-7z"/></svg>';
+    document.getElementById('tiempo-actual').textContent = "0:00";
+    document.getElementById('tiempo-total').textContent = "0:00";
 
     document.getElementById('modal-zoom').classList.add('active');
     renderJueces(datos.id);
@@ -231,7 +329,7 @@ function abrirZoom(datos) {
 
 function cerrarModal() {
     document.getElementById('modal-zoom').classList.remove('active');
-    audioActual.pause();
+    videoActual.pause();
     cancionModalActual = null;
 }
 
@@ -240,40 +338,48 @@ function renderJueces(cancionId) {
     container.innerHTML = '';
     if (!votosJueces[cancionId]) votosJueces[cancionId] = {};
 
-    juecesConfig.forEach(function(juez) {
+    juecesConfig.forEach(function (juez) {
         var nota = votosJueces[cancionId][juez.id];
         var dot = document.createElement('div');
         dot.className = 'dot-jurado' + (nota ? ' voted' : '');
 
-        if (nota) {
-            dot.innerHTML = `
-                <img src="${juez.img}" class="juez-avatar" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <span class="juez-fallback" style="display:none">J${juez.id}</span>
-                <span class="juez-score">${nota}</span>
-            `;
-        } else {
-            dot.innerHTML = `
-                <img src="${juez.img}" class="juez-avatar" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <span class="juez-fallback" style="display:none">J${juez.id}</span>
-            `;
-        }
+        // Imagen circular
+        var avatarHTML = `<img src="${juez.img}" class="juez-avatar" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <span class="juez-fallback" style="display:none">J${juez.id}</span>`;
+
+        // Nombre del juez
+        var nombreHTML = `<span class="juez-nombre">${juez.nombre}</span>`;
+
+        // Score debajo (solo si ha votado)
+        var scoreHTML = nota ? `<span class="juez-score">${nota}</span>` : '';
+
+        dot.innerHTML = avatarHTML + nombreHTML + scoreHTML;
 
         var overlay = document.createElement('div');
         overlay.className = 'juez-input-overlay';
         overlay.innerHTML = `<input type="number" step="0.1" min="0" max="10"><button class="juez-confirm-btn">OK</button>`;
 
-        dot.ondblclick = function(e) {
+        dot.ondblclick = function (e) {
             e.stopPropagation();
             overlay.classList.toggle('open');
         };
 
-        overlay.querySelector('button').onclick = function(e) {
+        overlay.querySelector('button').onclick = function (e) {
             e.stopPropagation();
-            var val = parseFloat(overlay.querySelector('input').value);
+            var inputElem = overlay.querySelector('input');
+
+            if (inputElem.value.trim() === '') {
+                overlay.classList.remove('open');
+                return;
+            }
+
+            var val = parseFloat(inputElem.value);
             if (!isNaN(val)) {
                 votosJueces[cancionId][juez.id] = val.toFixed(1);
                 renderJueces(cancionId);
                 actualizarMediaUI(cancionId);
+            } else {
+                overlay.classList.remove('open');
             }
         };
 
@@ -283,7 +389,7 @@ function renderJueces(cancionId) {
 }
 
 // ─── CONTROLES TWITCH ───
-document.getElementById('btn-twitch').onclick = function() {
+document.getElementById('btn-twitch').onclick = function () {
     twitchActivo = !twitchActivo;
     var dot = this.querySelector('.twitch-dot');
     var label = this.querySelector('.twitch-label');
@@ -298,58 +404,83 @@ document.getElementById('btn-twitch').onclick = function() {
 
 function actualizarUIChat() {
     var count = document.querySelector('.twitch-count');
-    if (count && cancionModalActual) {
-        var num = votosTwitch[cancionModalActual] ? Object.keys(votosTwitch[cancionModalActual]).length : 0;
-        count.textContent = num > 0 ? num : '';
+    var list = document.getElementById('twitch-votes-list');
+
+    if (cancionModalActual) {
+        var votos = votosTwitch[cancionModalActual];
+        var num = votos ? Object.keys(votos).length : 0;
+
+        if (count) count.textContent = num > 0 ? num : '';
+
+        if (list) {
+            if (num === 0) {
+                list.innerHTML = '<div class="twitch-empty-msg">Sin votos aún...</div>';
+            } else {
+                list.innerHTML = '';
+                // Renderizamos los votos
+                for (var user in votos) {
+                    var item = document.createElement('div');
+                    item.className = 'twitch-vote-item';
+                    item.innerHTML = `<span class="twitch-vote-user">${user}</span><span class="twitch-vote-score">${votos[user]}</span>`;
+                    list.prepend(item); // Prepend para los más nuevos arriba
+                }
+            }
+        }
     }
 }
 
-// ─── CONTROLES DE AUDIO ───
+// ─── CONTROLES DE VIDEO ───
+window.onload = function () {
+    videoActual = document.getElementById('videoActual');
 
-document.getElementById('btn-play').onclick = function() {
-    if (audioActual.paused) {
-        audioActual.play();
-        this.textContent = '⏸';
-    } else {
-        audioActual.pause();
-        this.textContent = '▶';
-    }
+    document.getElementById('btn-play').onclick = function () {
+        if (!videoActual.src) return;
+        if (videoActual.paused) {
+            videoActual.play();
+            this.innerHTML = '<svg class="play-icon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+        } else {
+            videoActual.pause();
+            this.innerHTML = '<svg class="play-icon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M8 5v14l11-7z"/></svg>';
+        }
+    };
+
+    document.getElementById('btn-adelante').onclick = function () {
+        if (!videoActual.src) return;
+        videoActual.currentTime += 10;
+    };
+
+    document.getElementById('btn-atras').onclick = function () {
+        if (!videoActual.src) return;
+        videoActual.currentTime -= 10;
+    };
+
+    document.getElementById('volumen-slider').oninput = function () {
+        videoActual.volume = this.value;
+    };
+
+    document.getElementById('barra-bg').onclick = function (e) {
+        if (!videoActual.src) return;
+        var rect = this.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var width = rect.width;
+        var pct = x / width;
+        videoActual.currentTime = pct * videoActual.duration;
+    };
+
+    videoActual.ontimeupdate = function () {
+        if (videoActual.duration) {
+            var pct = (videoActual.currentTime / videoActual.duration) * 100;
+            document.getElementById('barra-fill').style.width = pct + '%';
+
+            document.getElementById('tiempo-actual').textContent = formatearTiempo(videoActual.currentTime);
+            document.getElementById('tiempo-total').textContent = formatearTiempo(videoActual.duration);
+        }
+    };
+
+    videoActual.onended = function () {
+        document.getElementById('btn-play').innerHTML = '<svg class="play-icon" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M8 5v14l11-7z"/></svg>';
+        document.getElementById('barra-fill').style.width = '0%';
+    };
+
+    renderizarGrid();
 };
-
-document.getElementById('btn-adelante').onclick = function() {
-    audioActual.currentTime += 10;
-};
-
-document.getElementById('btn-atras').onclick = function() {
-    audioActual.currentTime -= 10;
-};
-
-document.getElementById('volumen-slider').oninput = function() {
-    audioActual.volume = this.value;
-};
-
-document.getElementById('barra-bg').onclick = function(e) {
-    var rect = this.getBoundingClientRect();
-    var x = e.clientX - rect.left;
-    var width = rect.width;
-    var pct = x / width;
-    audioActual.currentTime = pct * audioActual.duration;
-};
-
-audioActual.ontimeupdate = function() {
-    if (audioActual.duration) {
-        var pct = (audioActual.currentTime / audioActual.duration) * 100;
-        document.getElementById('barra-fill').style.width = pct + '%';
-        
-        var actual = formatearTiempo(audioActual.currentTime);
-        var total = formatearTiempo(audioActual.duration);
-        document.getElementById('tiempo-texto').textContent = actual + " / " + total;
-    }
-};
-
-audioActual.onended = function() {
-    document.getElementById('btn-play').textContent = '▶';
-    document.getElementById('barra-fill').style.width = '0%';
-};
-
-window.onload = renderizarGrid;
